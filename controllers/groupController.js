@@ -101,7 +101,7 @@ exports.group_create_post = [
                         var thursday = 'Thursday: ' + req.body.thursday;
                         lecture_time.push(thursday)
                     }
-
+                    
                     // Create new group
                     var group = new Group({
                         name: req.body.name,
@@ -267,9 +267,9 @@ exports.group_update_post = [
                         status: req.body.status,
                         _id: req.params.id,
                     })
-            Group.findByIdAndUpdate(req.params.id, group_new, {}, (err, thegroup) => {
+            Group.findByIdAndUpdate(req.params.id, group_new, (err, result) => {
                 if (err) { return next(err); }
-                res.redirect('/admin/level/group/' + thegroup.url)
+                res.redirect('/admin/level/group/' + result.url)
             })
         }
     }

@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 var GroupSchema = new Schema({
     name:  { type: String, required: true , maxlength: 100 },
     current_level: { type: Schema.Types.ObjectId, ref: 'Level', required: true },
+    batch: { type:String },
     level_start_date: { type: Date },
     level_end_date: { type: Date },
     lecture_attended: { type: Number, default: 0 },

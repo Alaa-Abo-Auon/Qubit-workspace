@@ -14,6 +14,13 @@
         <label class="form-label" for="Description"><strong>Description:</strong></label>
         <textarea id="description" class="form-control" placeholder="Enter the description..." name="description">{{level.description}}</textarea>
     </div>
+    <div>
+        <label class="form-label"><strong>Choose the level type:</strong></label>
+        <select class="form-select" name="type">
+            <option value="Basic">Basic</option>
+            <option value="Independent">Independent</option>
+        </select>
+    </div>
     <br>
     <button class="btn btn-primary" type="submit">Submit</button>
 </form>
