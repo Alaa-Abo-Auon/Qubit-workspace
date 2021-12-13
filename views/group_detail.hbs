@@ -1,0 +1,67 @@
+<h1>{{group.name}}</h1>
+<hr>
+<div style="margin-left:20px;margin-top:20px">
+    <h4>{{title}}</h4>
+    <hr style="width: 18%;">
+    <h6><strong>The current level is: </strong>{{group.current_level.name}}</h6>
+    <h6><strong>The group started the level in: </strong>{{group.short_level_start_date}}</h6>
+    <h6><strong>The group should end the level in: </strong>{{group.short_level_end_date}}</h6>
+    <h6><strong>Status: </strong>{{group.status}}</h6>
+    <hr>
+    <h4>Meeting Time</h4>
+    <hr style="width: 18%;">
+    {{#each group.lecture_time as |meeting|}}
+        <h5>{{meeting}}</h5>
+    {{else}}
+        <h6 class="text-danger">
+            There is no time
+        </h6>
+    {{/each}}
+    <hr>
+    <h4>Students Table</h4>
+    {{#if students}}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Student Name</th>
+                    <th scope="col">Current Group</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Enroll Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each students as |student|}}
+                    <tr>
+                        <td>
+                            <a href='student/{{student.url}}'>{{student.name}}</a>
+                        </td>
+                        <td>
+                            {{group.name}}
+                        </td>
+                        <td>
+                            {{student.phone_number}}
+                        </td>
+                        <td>
+                            {{student.status}}
+                        </td>
+                        <td>
+                            {{student.due_back_formatted}}
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    {{else}}
+        <h6 class="text-danger">
+            There is no students in the group
+        </h6>
+    {{/if}}
+    <hr>
+    <p>
+        <a class="text-success" href='{{group.url}}/update'>Update {{group.name}}</a>
+    </p>
+    <p>
+        <a class="text-danger" href='{{group.url}}/delete'>Delete {{group.name}}</a>
+    </p>
+<div>

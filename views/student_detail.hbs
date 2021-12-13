@@ -1,0 +1,24 @@
+<div>
+    <h1>{{title}}</h1>
+</div>
+<hr>
+<div>
+    <h6><u>Student name:</u> {{student_detail.name}}</h6>
+    <br>
+    <h6><u>Phone number:</u> {{student_detail.phone_number}}</h6>
+    <br>
+    <h6><u>Enroll date:</u> {{student_detail.due_back_formatted}}</h6>
+    <br>
+    <h6><u>Current group:</u> {{student_detail.group.name}}</h6>
+    <br>
+    <h6><u>Current level:</u> {{student_detail.group.current_level.name}}</h6>
+    <br>
+    <h6><u>Status:</u> {{student_detail.status}}</h6>
+    <hr>
+    <p>
+        <a class="text-success" href='{{student_detail.url}}/update'>Update Student</a>
+    </p>
+    <p>
+        <a class="text-danger" href='{{student_detail.url}}/delete'>Delete Student</a>
+    </p>
+</div>

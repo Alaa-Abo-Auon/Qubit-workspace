@@ -1,0 +1,26 @@
+
+<h1>Delete {{level.name}}</h1>
+<div style='margin-left:20px;margin-top:20px'>
+    {{#if group.length}}
+        <p>
+            Delete the following groups before attempting to delete this level.
+        </p>
+        <ul>
+            {{#each group as |group|}}
+                <li>
+                    <a href='/level/group/{{group.url}}'>{{group.name}}</a>
+                </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <p>
+            Do you really want to delete this level?
+        </p>
+        <form method="POST" action="">
+            <div class="form-group">
+               <input id="del" class="form-control" type='hidden' name='del' value={{level._id}}>
+            </div>
+            <button class="btn btn-primary" type='submit'>Delete</button>
+        </form>
+  {{/if}}
+</div>

@@ -1,0 +1,14 @@
+<h1>{{title}}</h1>
+{{#if group_list}}
+    <ol>
+        {{#each group_list as |group|}}
+            <li>
+                <a href="level/group/{{group.url}}">{{group.name}}</a>
+            </li>
+        {{/each}}
+    </ol>
+{{else}}
+    <p class="text-danger">
+        There are no groups.
+    </p>
+{{/if}}

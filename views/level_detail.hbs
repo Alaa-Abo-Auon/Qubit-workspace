@@ -1,0 +1,46 @@
+<h1>{{level.name}}</h1>
+<hr>
+<div style="margin-left:20px;margin-top:20px">
+    <h4>Groups Table</h4>
+    {{#if level_groups}}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Group Name</th>
+                    <th scope="col">Current Level</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each level_groups as |group|}}
+                    <tr>
+                        <td>
+                            <a href='group/{{group.url}}'>{{group.name}}</a>
+                        </td>
+                        <td>
+                            {{group.current_level.name}}
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    {{else}}
+        <p class="text-danger">This level has no groups.</p>
+    {{/if}}
+    <hr>
+    <h4>{{title}}</h4>
+    <hr style="width: 18%;">
+    <p>
+        <span><strong>#Number of Days:</strong> {{level.total_days}}</span>
+    </p>
+    <div class="description">
+        <strong>#The Description</strong>
+        <p>{{level.description}}</p>
+    </div>
+    <hr>
+    <p>
+        <a class="text-success" href="{{level.url}}/update">Update {{level.name}}</a>
+    </p>
+    <p>
+        <a class="text-danger" href="{{level.url}}/delete">Delete {{level.name}}</a>
+    </p>
+<div>

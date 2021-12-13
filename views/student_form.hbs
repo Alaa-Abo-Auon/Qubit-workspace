@@ -1,0 +1,77 @@
+<div class="title">
+    <h1>{{title}}</h1>
+</div>
+<form method="POST" action="">
+    <div class="mb-3">
+        <label class="form-label" for="Name"><strong>Student name:</strong></label>
+        <input id="name" type="text" placeholder="The student name..." name="name" class="form-control" value={{student.name}}>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="phone_number"><strong>Phone number:</strong></label>
+        <input id="phone_number" min="0" placeholder="Student phone number..."  type="number" name="phone_number" class="form-control" value={{student.phone_number}}>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="enroll_date"><strong>Enroll date:</strong></label>
+        <input id="enroll_date" min="2020-01-01" type="date" name="enroll_date" class="form-control" value={{student.phone_number}}>
+    </div>
+    {{#if levels}}
+        <div>
+            {{#if levels}}
+                <label class="form-label"><strong>Choose the level:</strong></label>
+                <div class="mb-3">
+                    <select class="form-select" name="level_choose">
+                        {{#each levels as |level|}}
+                            <option value={{level._id}}>{{level.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+            {{else}}
+                <label class="form-label"><strong>Choose the level:</strong></label>
+                <span class="text-danger">
+                    Create Level First
+                </span>
+            {{/if}}
+        </div>
+    {{/if}}
+    <div>
+        {{#if groups}}
+            <label class="form-label"><strong>Choose the group:</strong></label>
+            <div class="mb-3">
+                <select class="form-select" name="group_choose">
+                    {{#each groups as |group|}}
+                        <option value={{group._id}}>{{group.name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        {{else}}
+            <label class="form-label"><strong>Choose the group:</strong></label>
+            <span class="text-danger">
+                Create Group First
+            </span>
+        {{/if}}
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><strong>Stutas:</strong></label>
+        <select id="status" class="form-select" name="status">
+            <option value="Active">Active</option>
+            <option value="Passed">Passed</option>
+            <option value="Suspended">Suspended</option>
+        </select>
+    </div>
+    <div class="mt-3 mb-3">
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </div>
+</form>
+{{#if errors}}
+    <div class="mt-3 mb-3">
+        {{#each errors as |error|}}
+            <span class="text-danger">{{error.msg}}</span>
+            <br>
+        {{/each}}
+    </div>
+{{/if}}
+{{#if err}}
+    <div class="mt-3 mb-3">
+        <span class="text-danger">{{err}}</span>
+    </div>
+{{/if}}

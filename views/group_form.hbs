@@ -1,0 +1,97 @@
+<div class="title">
+    <h1>{{title}}</h1>
+</div>
+<form method="POST" action="">
+    <div class="mb-3">
+        <label class="form-label" for="Name"><strong>Group name:</strong></label>
+        <input id="name" type="text" placeholder="The group name..." name="name" class="form-control" value={{group.name}}>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="Start"><strong>Level start date:</strong></label>
+        <input id="level_start_date" min="2020-01-01" type="date" name="level_start_date" class="form-control">
+    </div>
+     <div class="mb-3">
+        <label class="form-label" for="Start"><strong>Level end date:</strong></label>
+        <input id="level_end_date" min="2020-01-01" type="date" name="level_end_date" class="form-control">
+    </div>
+    <div>
+        {{#if levels}}
+        <div  class="mb-3 mt-2">
+            <label class="form-label"><strong>Choose the level:</strong></label>
+            <select class="form-select" name="level_choose">
+                {{#each levels as |level|}}
+                    <option value={{level._id}}>{{level.name}}</option>
+                {{/each}}
+            </select>
+        </div>
+        {{else}}
+            <label class="form-label"><strong>Choose the level:</strong></label>
+            <span class="text-danger">
+                Create Level First
+            </span>
+        {{/if}}
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><strong>Stutas:</strong></label>
+        <select id="status" class="form-select" name="status">
+            <option value="Active">Active</option>
+            <option value="Passed">Passed</option>
+            <option value="Suspended">Suspended</option>
+        </select>
+    </div>
+    <div class="input-group mb-3">
+            <label class="form-label"><strong>Times:</strong></label>
+        <div class="input-group mb-3">
+            <div class="input-group-text">
+               <label class="form-label">Saturday</label>
+            </div>
+            <input type="text" name="saturday" class="form-control choice">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-text">
+                <label class="form-label">Sunday</label>
+            </div>
+            <input type="text" name="sunday" class="form-control choice">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-text">
+               <label class="form-label">Monday</label>
+            </div>
+            <input type="text" name="monday" class="form-control choice">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-text">
+               <label class="form-label">Tuesday</label>
+            </div>
+            <input type="text" name="tuesday" class="form-control choice" >
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-text">
+               <label class="form-label">Wednesday</label>
+            </div>
+            <input type="text" name="wednesday" class="form-control choice">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-text">
+               <label class="form-label">Thursday</label>
+            </div>
+            <input type="text" name="thursday" class="form-control choice">
+        </div>
+    </div>
+    <div class="mt-3 mb-3">
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </div>
+</form>
+{{#if errors}}
+    <div class="mt-3 mb-3">
+        {{#each errors as |error|}}
+            <span class="text-danger">{{error.msg}}</span>
+            <br>
+        {{/each}}
+    </div>
+{{/if}}
+{{#if err}}
+    <div class="mt-3 mb-3">
+        <span class="text-danger">{{err}}</span>
+    </div>
+{{/if}}

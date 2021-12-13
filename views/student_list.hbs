@@ -1,0 +1,18 @@
+<h1>{{title}}</h1>
+{{#if student_list}}
+    <ol>
+        {{#each student_list as |student|}}
+            <li>
+                <a href="level/group/student/{{student.url}}">{{student.name}}</a>
+            </li>
+        {{/each}}
+    </ol>
+    <hr>
+    <div>
+        <h6><a href='/admin/student/create'>Register a new student</a></h6>
+    </div>
+{{else}}
+    <p class="text-danger">
+        There are no students.
+    </p>
+{{/if}}

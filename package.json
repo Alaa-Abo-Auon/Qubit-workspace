@@ -1,0 +1,38 @@
+{
+  "name": "qubit-workspace",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "async": "^3.2.2",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "express-validator": "^6.14.0",
+    "hbs": "^4.2.0",
+    "http-errors": "~1.6.3",
+    "luxon": "^2.2.0",
+    "mongoose": "^6.1.1",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.15"
+  },
+  "description": "*main branch*",
+  "main": "app.js",
+  "devDependencies": {
+    "eslint": "^8.4.1",
+    "eslint-config-google": "^0.14.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alaa-Abo-Auon/qubit-workspace.git"
+  },
+  "keywords": [],
+  "author": "Alaa Abu Aoun, Mahmoud Ouda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Alaa-Abo-Auon/qubit-workspace/issues"
+  },
+  "homepage": "https://github.com/Alaa-Abo-Auon/qubit-workspace#readme"
+}

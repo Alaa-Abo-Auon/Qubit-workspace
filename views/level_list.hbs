@@ -1,0 +1,14 @@
+<h1>{{title}}</h1>
+{{#if level_list}}
+    <ol>
+        {{#each level_list as |level|}}
+            <li>
+                <a href='level/{{level.url}}'>{{level.name}}</a>
+            </li>
+        {{/each}}
+    </ol>
+{{else}}
+    <p class="text-danger">
+        There are no levels.
+    </p>
+{{/if}}

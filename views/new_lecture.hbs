@@ -1,0 +1,38 @@
+<h1>{{title}}</h1>
+<div style="margin-left:20px;margin-top:20px">
+    <h3>{{group.current_level.name}}</h3>
+    {{#if students}}
+        <form method="POST" action="">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Student Name</th>
+                        <th scope="col">Attended</th>
+                        <th scope="col">Current Group</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each students as |student|}}
+                        <tr>
+                            <td>
+                                <a href='/level/group/student/{{student.url}}'>{{student.name}}</a>
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="checkbox" name="attended" id="attended" value={{student._id}}>
+                            </td>
+                            <td>
+                                {{group.name}}
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            <br>
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </form>
+    {{else}}
+        <p class="text-danger">
+            There are no students in this group.
+        </p>
+    {{/if}}
+<div>
