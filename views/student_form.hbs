@@ -4,7 +4,7 @@
 <form method="POST" action="">
     <div class="mb-3">
         <label class="form-label" for="Name"><strong>Student name:</strong></label>
-        <input id="name" type="text" placeholder="The student name..." name="name" class="form-control" value={{student.name}}>
+        <input id="name" type="text" placeholder="The student name..." name="name" class="form-control" value='{{student.name}}'>
     </div>
     <div class="mb-3">
         <label class="form-label" for="phone_number"><strong>Phone number:</strong></label>
@@ -55,6 +55,7 @@
         <select id="status" class="form-select" name="status">
             <option value="Active">Active</option>
             <option value="Passed">Passed</option>
+            <option value="Excuse">Excuse</option>
             <option value="Suspended">Suspended</option>
         </select>
     </div>
