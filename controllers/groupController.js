@@ -75,7 +75,7 @@ exports.group_create_post = [
                 }
             }, (err, results) => {
                 if (err) { return next(err); }
-                const Err = 'The name is not available'
+                const Err = 'The name "' + req.body.name + '" is not available'
                 if (results.group) {
                     res.render('group_form', { title: 'Create new group', group: req.body, levels: results.level, err: Err });
                 } else {
@@ -127,26 +127,26 @@ exports.group_detail = (req, res, next) => {
     }, (err, results) => {
         var name = results.group.current_level.name;
         Level.find()
-        .exec((err, next_level) =>{
-            if(err) { return next(err); }
-            var index = next_level.findIndex(i => i.name === name)
-            var c = index + 1
-            var list = []
-            for (var value of results.students) {
-                list.push(value)
-            }
-            res.render('group_detail', { title: 'Group Detail', students: list, group: results.group, next_level: next_level[c] })
-        })
+            .exec((err, next_level) => {
+                if (err) { return next(err); }
+                var index = next_level.findIndex(i => i.name === name)
+                var c = index + 1
+                var list = []
+                for (var value of results.students) {
+                    list.push(value)
+                }
+                res.render('group_detail', { title: 'Group Detail', students: list, group: results.group, next_level: next_level[c] })
+            })
     })
 }
 
 // Next level
-exports.next_level_post = (req, res, next) =>{
+exports.next_level_post = (req, res, next) => {
     Group.findByIdAndUpdate(req.params.id, { current_level: req.body.next_level })
-    .exec((err) =>{
-        if(err) { return next(err); }
-        res.redirect('/admin/level/group/' + req.params.id )
-    })
+        .exec((err) => {
+            if (err) { return next(err); }
+            res.redirect('/admin/level/group/' + req.params.id)
+        })
 }
 
 /***************************************************************************************/
@@ -239,7 +239,19 @@ exports.group_update_post = [
             return;
         }
         else {
+            async.parallel({
+                group: (cb) => {
+                    Group.findOne({ name: req.body.name })
+                        .exec(cb)
+                },
+                level: (cb) => {
+                    Level.find()
+                        .sort([['name', 'ascending']])
+                        .exec(cb)
+                }
+            }, (err, result) => {
 
+            })
             var lecture_time = [
                 { saturday: req.body.saturday },
                 { sunday: req.body.sunday },
@@ -292,6 +304,8 @@ exports.group_new_meeting_get = (req, res, next) => {
 // POST Add New Meeting
 exports.group_new_meeting_post = [
     (req, res, next) => {
+        console.log(req.body)
+
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
@@ -323,54 +337,27 @@ exports.group_new_meeting_post = [
                 },
             }, (err, results) => {
                 if (err) { return next(err); }
-                switch (results.group.current_level.name) {
-                    case 'Level1':
-                        if (req.body.attended.constructor === Array) {
-                            for (var x of req.body.attended) {
-                                Absent.findOneAndUpdate({ student: x }, { $inc: { level1: 1 } }, { new: true })
-                                    .exec()
-                            }
-                        } else {
-                            Absent.findOneAndUpdate({ student: req.body.attended }, { $inc: { level1: 1 } }, { new: true })
-                                .exec()
-                        }
-                        break;
-
-                    case 'Level2':
-                        if (req.body.attended.constructor === Array) {
-                            for (var x of req.body.attended) {
-                                Absent.findOneAndUpdate({ student: x }, { $inc: { level2: 1 } }, { new: true })
-                                    .exec()
-                            }
-                        } else {
-                            Absent.findOneAndUpdate({ student: req.body.attended }, { $inc: { level2: 1 } }, { new: true })
-                                .exec()
-                        }
-                        break;
-
-                    case 'Level3':
-                        if (req.body.attended.constructor === Array) {
-                            for (var x of req.body.attended) {
-                                Absent.findOneAndUpdate({ student: x }, { $inc: { level3: 1 } }, { new: true })
-                                    .exec()
-                            }
-                        } else {
-                            Absent.findOneAndUpdate({ student: req.body.attended }, { $inc: { level3: 1 } }, { new: true })
-                                .exec()
-                        }
-                        break;
-
-                    case 'Level4':
-                        if (req.body.attended.constructor === Array) {
-                            for (var x of req.body.attended) {
-                                Absent.findOneAndUpdate({ student: x }, { $inc: { level4: 1 } }, { new: true })
-                                    .exec()
-                            }
-                        } else {
-                            Absent.findOneAndUpdate({ student: req.body.attended }, { $inc: { level4: 1 } }, { new: true })
-                                .exec()
-                        }
-                        break;
+                for (var x of req.body.attended) {
+                    if(req.body.reason.includes(x)){
+                        var obj = new Absent({
+                            student: x,
+                            level: results.group.current_level._id,
+                            reason: true
+                        })
+                        obj.save((error, result) => {
+                            console.log(result)
+                        })
+                    }else{
+                        var obj = new Absent({
+                            student: x,
+                            level: results.group.current_level._id,
+                            reason: false
+                        })
+                        obj.save((error, result) => {
+                            console.log('wtf')
+                            console.log(result)
+                        })
+                    }
                 }
                 res.redirect('/admin/level/group/' + req.params.id)
             })

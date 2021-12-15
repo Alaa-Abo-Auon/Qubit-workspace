@@ -7,8 +7,10 @@
                 <thead>
                     <tr>
                         <th scope="col">Student Name</th>
-                        <th scope="col">Attended</th>
+                        <th scope="col">Absence</th>
+                        <th scope="col">Reason</th>
                         <th scope="col">Current Group</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -19,6 +21,9 @@
                             </td>
                             <td>
                                 <input class="form-check-input" type="checkbox" name="attended" id="attended" value={{student._id}}>
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="checkbox" name="reason" id="reason" value={{student._id}}>
                             </td>
                             <td>
                                 {{group.name}}

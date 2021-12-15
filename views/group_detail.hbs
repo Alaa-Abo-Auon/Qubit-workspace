@@ -50,6 +50,7 @@
                     <th scope="col">Phone Number</th>
                     <th scope="col">Status</th>
                     <th scope="col">Enroll Date</th>
+                    <th scope="col">Absent days</th>
                 </tr>
             </thead>
             <tbody>
@@ -70,6 +71,7 @@
                         <td>
                             {{student.due_back_formatted}}
                         </td>
+                        {{!-- <td>GET this students absent objects with filter (user = current_user and level = current_level)</td> --}}
                     </tr>
                 {{/each}}
             </tbody>
