@@ -49,8 +49,8 @@ router.get('/level/group/:id/update', group_controller.group_update_get);
 router.post('/level/group/:id/update', group_controller.group_update_post);
 
 // GET,POST new lecture
-router.get('/level/group/:id/new_lecture', group_controller.group_new_meeting_get);
-router.post('/level/group/:id/new_lecture', group_controller.group_new_meeting_post);
+router.get('/level/group/:id/new_meeting', group_controller.group_new_meeting_get);
+router.post('/level/group/:id/new_meeting', group_controller.group_new_meeting_post);
 
 // Next level
 router.post('/level/group/:id', group_controller.next_level_post);
@@ -76,7 +76,7 @@ router.get('/level/group/student/:id/update', student_controller.student_update_
 router.post('/level/group/student/:id/update', student_controller.student_update_post);
 
 // Absent Student
-// router.get('/students/absent', student_controller.student_absent_list_get);
+router.get('/students/absent', student_controller.student_absent_list_get);
 
 /***************************************************************************************/
 

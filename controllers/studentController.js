@@ -271,7 +271,7 @@ exports.student_update_post = [
 
 /***************************************************************************************/
 // Absent Students
-exports.students_absent_list_get = (req, res, next) => {
+exports.student_absent_list_get = (req, res, next) => {
     async.parallel({
         student: (cb) => {
             Student.find()
