@@ -212,7 +212,7 @@ exports.student_update_post = [
             return;
         }
         else {
-            Student.findByIdAndUpdate(req.params.id, student_new, {}, (err, thestudent) => {
+            Student.findByIdAndUpdate(req.params.id, student_new, (err, thestudent) => {
                 if (err) { return next(err); }
                 res.redirect('/admin/level/group/student/' + thestudent.url)
             })

@@ -9,7 +9,7 @@ var GroupSchema = new Schema({
     level_start_date: { type: Date },
     level_end_date: { type: Date },
     lecture_attended: { type: Number, default: 0 },
-    lecture_time: [{ type:String }],
+    lecture_time: [{ type: Object }],
     status: { type: String },
 });
 

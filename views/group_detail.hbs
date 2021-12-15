@@ -10,13 +10,32 @@
     <hr>
     <h4>Meeting Time</h4>
     <hr style="width: 18%;">
-    {{#each group.lecture_time as |meeting|}}
-        <h5>{{meeting}}</h5>
-    {{else}}
-        <h6 class="text-danger">
-            There is no time
-        </h6>
-    {{/each}}
+    <div id="time">
+        {{#if group.lecture_time.0.saturday}}
+            <h6>Saturday: {{group.lecture_time.0.saturday}}</h6>
+        {{/if}}
+        {{#if group.lecture_time.1.sunday}}
+            <h6>Sunday: {{group.lecture_time.1.sunday}}</h6>
+        {{/if}}
+        {{#if group.lecture_time.2.monday}}
+            <h6>Monday: {{group.lecture_time.2.monday}}</h6>
+        {{/if}}
+        {{#if group.lecture_time.3.tuesday}}
+            <h6>Tuesday: {{group.lecture_time.3.tuesday}}</h6>
+        {{/if}}
+        {{#if group.lecture_time.4.wednesday}}
+            <h6>Wednesday: {{group.lecture_time.4.wednesday}}</h6>
+        {{/if}}
+        {{#if group.lecture_time.5.thursday}}
+            <h6>Thursday: {{group.lecture_time.5.thursday}}</h6>
+        {{/if}}   
+    </div>
+    <h6 class="text-danger" id="wowo"></h6>
+    <script>
+        if(document.getElementById('time').innerHTML.trim() === ""){
+            document.getElementById('wowo').innerHTML = "There is no time";
+        }
+    </script>
     <hr>
     <h4>Students Table</h4>
     {{#if students}}
@@ -58,6 +77,13 @@
         </h6>
     {{/if}}
     <hr>
+    {{#if next_level}}
+        <form method="POST" action="">
+            <input id="next_level" type="hidden" name="next_level" value="{{next_level._id}}">
+            <button class="btn btn-primary" type="submit">Next level</button>
+        </form>
+        <br>
+    {{/if}}
     <p>
         <a class="text-success" href='{{group.url}}/update'>Update {{group.name}}</a>
     </p>
