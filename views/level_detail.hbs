@@ -7,6 +7,7 @@
             <thead>
                 <tr>
                     <th scope="col">Group Name</th>
+                    <th scope="col">Student Number</th>
                     <th scope="col">Current Level</th>
                 </tr>
             </thead>
@@ -15,6 +16,9 @@
                     <tr>
                         <td>
                             <a href='group/{{group.url}}'>{{group.name}}</a>
+                        </td>
+                        <td>
+                            {{count}}
                         </td>
                         <td>
                             {{group.current_level.name}}

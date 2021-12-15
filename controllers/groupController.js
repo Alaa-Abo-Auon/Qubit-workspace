@@ -79,31 +79,14 @@ exports.group_create_post = [
                 if (results.group) {
                     res.render('group_form', { title: 'Create new group', group: req.body, levels: results.level, err: Err });
                 } else {
-                    var lecture_time = []
-                    if (req.body.saturday) {
-                        var saturday = 'Saturday: ' + req.body.saturday;
-                        lecture_time.push(saturday)
-                    }
-                    if (req.body.sunday) {
-                        var sunday = 'Sunday: ' + req.body.sunday;
-                        lecture_time.push(sunday)
-                    }
-                    if (req.body.monday) {
-                        var monday = 'Monday: ' + req.body.monday;
-                        lecture_time.push(monday)
-                    }
-                    if (req.body.tuesday) {
-                        var tuesday = 'Tuesday: ' + req.body.tuesday;
-                        lecture_time.push(tuesday)
-                    }
-                    if (req.body.wednesday) {
-                        var wednesday = 'Wednesday: ' + req.body.wednesday;
-                        lecture_time.push(wednesday)
-                    }
-                    if (req.body.thursday) {
-                        var thursday = 'Thursday: ' + req.body.thursday;
-                        lecture_time.push(thursday)
-                    }
+                    var lecture_time = [
+                        { saturday: req.body.saturday },
+                        { sunday: req.body.sunday },
+                        { monday: req.body.monday },
+                        { tuesday: req.body.tuesday },
+                        { wednesday: req.body.wednesday },
+                        { thursday: req.body.thursday },
+                    ];
 
                     // Create new group
                     var group = new Group({
@@ -142,12 +125,27 @@ exports.group_detail = (req, res, next) => {
                 .exec(cb)
         }
     }, (err, results) => {
-        var list = []
-        for (var value of results.students) {
-            list.push(value)
-        }
-        if (err) { return next(err); }
-        res.render('group_detail', { title: 'Group Detail', students: list, group: results.group })
+        var name = results.group.current_level.name;
+        Level.find()
+        .exec((err, next_level) =>{
+            if(err) { return next(err); }
+            var index = next_level.findIndex(i => i.name === name)
+            var c = index + 1
+            var list = []
+            for (var value of results.students) {
+                list.push(value)
+            }
+            res.render('group_detail', { title: 'Group Detail', students: list, group: results.group, next_level: next_level[c] })
+        })
+    })
+}
+
+// Next level
+exports.next_level_post = (req, res, next) =>{
+    Group.findByIdAndUpdate(req.params.id, { current_level: req.body.next_level })
+    .exec((err) =>{
+        if(err) { return next(err); }
+        res.redirect('/admin/level/group/' + req.params.id )
     })
 }
 
@@ -242,31 +240,14 @@ exports.group_update_post = [
         }
         else {
 
-            var lecture_time = []
-            if (req.body.saturday) {
-                var saturday = 'Saturday: ' + req.body.saturday;
-                lecture_time.push(saturday)
-            }
-            if (req.body.sunday) {
-                var sunday = 'Sunday: ' + req.body.sunday;
-                lecture_time.push(sunday)
-            }
-            if (req.body.monday) {
-                var monday = 'Monday: ' + req.body.monday;
-                lecture_time.push(monday)
-            }
-            if (req.body.tuesday) {
-                var tuesday = 'Tuesday: ' + req.body.tuesday;
-                lecture_time.push(tuesday)
-            }
-            if (req.body.wednesday) {
-                var wednesday = 'Wednesday: ' + req.body.wednesday;
-                lecture_time.push(wednesday)
-            }
-            if (req.body.thursday) {
-                var thursday = 'Thursday: ' + req.body.thursday;
-                lecture_time.push(thursday)
-            }
+            var lecture_time = [
+                { saturday: req.body.saturday },
+                { sunday: req.body.sunday },
+                { monday: req.body.monday },
+                { tuesday: req.body.tuesday },
+                { wednesday: req.body.wednesday },
+                { thursday: req.body.thursday },
+            ];
             var group_new = new Group({
                 name: req.body.name,
                 level_start_date: (req.body.level_start_date == '') ? Date.now : req.body.level_start_date,
@@ -276,7 +257,7 @@ exports.group_update_post = [
                 status: req.body.status,
                 _id: req.params.id,
             })
-            Group.findByIdAndUpdate(req.params.id, group_new, (err, result) => {
+            Group.findByIdAndUpdate(req.params.id, group_new, (err, thegroup) => {
                 if (err) { return next(err); }
                 res.redirect('/admin/level/group/' + result.url)
             })

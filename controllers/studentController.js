@@ -279,7 +279,7 @@ exports.students_absent_list_get = (req, res, next) => {
                 .exec(cb)
         },
         absent: (cb) => {
-            Absent.find({ level1: { $gte: 2} })
+            Absent.find({ level1: { $gte: 2 } })
         },
     }, (err, results) => {
         if (err) { return next(err); }

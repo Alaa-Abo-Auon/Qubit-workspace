@@ -52,6 +52,9 @@ router.post('/level/group/:id/update', group_controller.group_update_post);
 router.get('/level/group/:id/new_lecture', group_controller.group_new_meeting_get);
 router.post('/level/group/:id/new_lecture', group_controller.group_new_meeting_post);
 
+// Next level
+router.post('/level/group/:id', group_controller.next_level_post);
+
 /***************************************************************************************/
 /* STUDENT ROUTES */
 // GET Student list
