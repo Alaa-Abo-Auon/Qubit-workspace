@@ -6,7 +6,7 @@ const async = require('async');
 const { body, validationResult } = require('express-validator');
 
 
-// student list 
+// Student List 
 exports.student_list = (req, res, next) => {
     Student.find()
         .sort([['name', 'ascending']])
@@ -16,6 +16,8 @@ exports.student_list = (req, res, next) => {
             res.render('student_list', { title: 'All Students', student_list: results });
         });
 }
+
+/***************************************************************************************/
 
 // GET Create New Student
 exports.student_create_get = (req, res, next) => {
@@ -43,6 +45,7 @@ exports.student_create_post = [
     body('name').trim().isLength({ min: 1 }).escape().withMessage('Student name is required.'),
     body('phone_number').trim().isLength({ min: 1 }).escape().withMessage('Student phone number is required.'),
     body('group_choose').trim().isLength({ min: 1 }).escape().withMessage('Choose the group is required.'),
+    body('level_choose').trim().isLength({ min: 1 }).escape().withMessage('Choose the group is required.'),
     body('enroll_date').trim().isLength({ min: 1 }).escape().withMessage('Enroll date is required.'),
     body('status').trim().isLength({ min: 1 }).escape().withMessage('Choose the status is required.'),
 
@@ -83,31 +86,63 @@ exports.student_create_post = [
                     Level.find()
                         .sort([['name', 'ascending']])
                         .exec(cb)
-                }
+                },
+                chosen_level: (cb) => {
+                    Level.findById(req.body.level_choose)
+                        .exec(cb)
+                },
+                chosen_group: (cb) => {
+                    Group.findById(req.body.group_choose)
+                        .populate('current_level')
+                        .exec(cb)
+                },
             }, (err, results) => {
                 if (err) { return next(err); }
-                const Err = 'The name is not available'
                 if (results.student) {
+                    const Err = 'The name "' + results.student.name + '" is not available'
                     res.render('student_form', { title: 'Register a new student', student: req.body, groups: results.group, levels: results.level, err: Err });
                 } else {
-                    var student = new Student({
-                        name: req.body.name,
-                        phone_number: req.body.phone_number,
-                        enroll_date:  req.body.enroll_date,
-                        group: req.body.group_choose,
-                        status: req.body.status,
-                    });
-                    student.save((err, result) => {
-                        if (err) { return next(err); }
-                        console.log(result._id);
-                        const absent = new Absent({
-                            student: result._id
-                        })
-                        absent.save((err) => {
+                    var chosen_level = results.chosen_level.name
+                    var chosen_group = results.chosen_group.current_level.name
+                    if (chosen_level == chosen_group) {
+                        var student = new Student({
+                            name: req.body.name,
+                            phone_number: req.body.phone_number,
+                            enroll_date: req.body.enroll_date,
+                            group: req.body.group_choose,
+                            status: req.body.status,
+                            current_level: req.body.level_choose,
+                        });
+                        student.save((err, result) => {
                             if (err) { return next(err); }
+                            console.log(result._id);
+                            const absent = new Absent({
+                                student: result._id
+                            })
+                            absent.save((err) => {
+                                if (err) { return next(err); }
+                            })
+                            res.redirect('/admin/students');
                         })
-                        res.redirect('/admin/students');
-                    })
+                    } else {
+                        async.parallel({
+                            level: (cb) => {
+                                Level.find()
+                                    .sort([['name', 'ascending']])
+                                    .exec(cb)
+                            },
+                            group: (cb) => {
+                                Group.find()
+                                    .sort([['name', 'ascending']])
+                                    .exec(cb)
+                            },
+                        }, (err, results) => {
+                            if (err) { return next(err); }
+                            const Err = 'The group you chose is not in the level "' + chosen_level + '"'
+                            res.render('student_form', { title: 'Register a new student', student: req.body, groups: results.group, levels: results.level, err: Err });
+                        })
+                    }
+
                 }
             })
         };
@@ -115,7 +150,9 @@ exports.student_create_post = [
 
 ];
 
-// student detail
+/***************************************************************************************/
+
+// Student Detail
 exports.student_detail_get = (req, res, next) => {
     Student.findById(req.params.id)
         .populate({
@@ -124,11 +161,13 @@ exports.student_detail_get = (req, res, next) => {
         })
         .exec((err, results) => {
             if (err) { return next(err); }
-            res.render('student_detail', { title: 'Student Informations', student_detail: results })
+            res.render('student_detail', { title: 'Student Information', student_detail: results })
         })
 }
 
-// delete student
+/***************************************************************************************/
+
+// GET Student Delete
 exports.student_delete_get = (req, res, next) => {
     Student.findById(req.params.id)
         .exec((err, results) => {
@@ -136,10 +175,15 @@ exports.student_delete_get = (req, res, next) => {
             res.render('student_delete', { title: 'Delete', student: results })
         })
 }
+// POST Student Delete
 exports.student_delete_post = (req, res, next) => {
     async.parallel({
         student: (cb) => {
             Student.findById(req.params.id)
+                .exec(cb)
+        },
+        absent: (cb) => {
+            Absent.findById(req.params.id)
                 .exec(cb)
         }
     }, (err, results) => {
@@ -148,15 +192,20 @@ exports.student_delete_post = (req, res, next) => {
             res.render('student_delete', { title: 'Delete', student: results })
         }
         else {
-            Student.findByIdAndRemove(req.body.dels, (err) => {
+            Student.findByIdAndRemove(req.body.delete, (err) => {
                 if (err) { return next(err); }
-                res.redirect('/admin/students')
+                Absent.findOneAndRemove(req.body.delete, (err) => {
+                    if (err) { return next(err); }
+                    res.redirect('/admin/students')
+                })
             })
         }
     })
 }
 
-// update student
+/***************************************************************************************/
+
+// GET Student Update
 exports.student_update_get = (req, res, next) => {
     async.parallel({
         group: (cb) => {
@@ -173,7 +222,7 @@ exports.student_update_get = (req, res, next) => {
         res.render('student_form', { title: 'Update Student', groups: results.group, student: results.student })
     })
 }
-
+// POST Student Update
 exports.student_update_post = [
 
     body('name').trim().isLength({ min: 1 }).escape().withMessage('Student name is required.'),
@@ -190,7 +239,7 @@ exports.student_update_post = [
             phone_number: req.body.phone_number,
             group: req.body.group_choose,
             status: req.body.status,
-            enroll_date: (req.body.enroll_date == '')? Date.now : req.body.enroll_date,
+            enroll_date: (req.body.enroll_date == '') ? Date.now : req.body.enroll_date,
             _id: req.params.id,
         })
 
@@ -212,10 +261,29 @@ exports.student_update_post = [
             return;
         }
         else {
-            Student.findByIdAndUpdate(req.params.id, student_new, {}, (err, thestudent) => {
+            Student.findByIdAndUpdate(req.params.id, student_new, {}, (err, result) => {
                 if (err) { return next(err); }
-                res.redirect('/admin/level/group/student/' + thestudent.url)
+                res.redirect('/admin/level/group/student/' + result.url)
             })
         }
     }
 ];
+
+/***************************************************************************************/
+// Absent Students
+exports.students_absent_list_get = (req, res, next) => {
+    async.parallel({
+        student: (cb) => {
+            Student.find()
+                .populate('current_level')
+                .exec(cb)
+        },
+        absent: (cb) => {
+            Absent.find({ level1: { $gte: 2} })
+        },
+    }, (err, results) => {
+        if (err) { return next(err); }
+
+    })
+    res.render('student_absent', { title: 'Absent students', });
+}

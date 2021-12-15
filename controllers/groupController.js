@@ -1,10 +1,11 @@
 const Group = require('../models/group');
 const Level = require('../models/level');
 const Student = require('../models/student')
+const Absent = require('../models/absent')
 const { body, validationResult } = require('express-validator');
 const async = require('async');
 
-// Group list 
+// Group List 
 exports.group_list = (req, res, next) => {
     Group.find()
         .sort([['name', 'ascending']])
@@ -14,6 +15,8 @@ exports.group_list = (req, res, next) => {
             res.render('group_list', { title: 'All Groups', group_list: results });
         });
 }
+
+/***************************************************************************************/
 
 // GET Create New Group
 exports.group_create_get = (req, res, next) => {
@@ -74,34 +77,34 @@ exports.group_create_post = [
                 if (err) { return next(err); }
                 const Err = 'The name is not available'
                 if (results.group) {
-                    res.render('group_form', { title: 'Create new group', group: req.body, levels: results.level, err:Err });
+                    res.render('group_form', { title: 'Create new group', group: req.body, levels: results.level, err: Err });
                 } else {
                     var lecture_time = []
-                    if(req.body.saturday){
+                    if (req.body.saturday) {
                         var saturday = 'Saturday: ' + req.body.saturday;
                         lecture_time.push(saturday)
                     }
-                    if(req.body.sunday){
+                    if (req.body.sunday) {
                         var sunday = 'Sunday: ' + req.body.sunday;
                         lecture_time.push(sunday)
                     }
-                    if(req.body.monday){
+                    if (req.body.monday) {
                         var monday = 'Monday: ' + req.body.monday;
                         lecture_time.push(monday)
                     }
-                    if(req.body.tuesday){
+                    if (req.body.tuesday) {
                         var tuesday = 'Tuesday: ' + req.body.tuesday;
                         lecture_time.push(tuesday)
                     }
-                    if(req.body.wednesday){
+                    if (req.body.wednesday) {
                         var wednesday = 'Wednesday: ' + req.body.wednesday;
                         lecture_time.push(wednesday)
                     }
-                    if(req.body.thursday){
+                    if (req.body.thursday) {
                         var thursday = 'Thursday: ' + req.body.thursday;
                         lecture_time.push(thursday)
                     }
-                    
+
                     // Create new group
                     var group = new Group({
                         name: req.body.name,
@@ -113,7 +116,7 @@ exports.group_create_post = [
                     });
                     group.save((err, results) => {
                         if (err) { return next(err); }
-                        
+
                         res.redirect('/admin/groups');
                     })
                 }
@@ -122,6 +125,8 @@ exports.group_create_post = [
 
     }
 ];
+
+/***************************************************************************************/
 
 // Group Detail
 exports.group_detail = (req, res, next) => {
@@ -146,7 +151,9 @@ exports.group_detail = (req, res, next) => {
     })
 }
 
-// Delete Group
+/***************************************************************************************/
+
+// GET Group Delete
 exports.group_delete_get = (req, res, next) => {
     async.parallel({
         group: (cb) => {
@@ -160,7 +167,7 @@ exports.group_delete_get = (req, res, next) => {
         res.render('group_delete', { title: 'Delete', groups: results.group, students: results.student })
     })
 }
-
+// POsT Group Delete
 exports.group_delete_post = (req, res, next) => {
     async.parallel({
         group: (cb) => {
@@ -175,7 +182,7 @@ exports.group_delete_post = (req, res, next) => {
             res.render('group_delete', { title: 'Delete', groups: results.group, students: results.student })
             return;
         } else {
-            Group.findByIdAndRemove(req.body.delg, (err) => {
+            Group.findByIdAndRemove(req.body.delete, (err) => {
                 if (err) { return next(err); }
                 res.redirect('/admin/groups');
             })
@@ -183,7 +190,9 @@ exports.group_delete_post = (req, res, next) => {
     })
 }
 
-// Update Group
+/***************************************************************************************/
+
+// GET Group Update
 exports.group_update_get = (req, res, next) => {
     async.parallel({
         group: (cb) => {
@@ -201,7 +210,7 @@ exports.group_update_get = (req, res, next) => {
         res.render('group_form', { title: 'Update Group', group: results.group, levels: results.level })
     })
 }
-
+// POST Group Update
 exports.group_update_post = [
 
     body('name').trim().isLength({ min: 1 }).escape().withMessage('Group name is required.'),
@@ -234,39 +243,39 @@ exports.group_update_post = [
         else {
 
             var lecture_time = []
-                    if(req.body.saturday){
-                        var saturday = 'Saturday: ' + req.body.saturday;
-                        lecture_time.push(saturday)
-                    }
-                    if(req.body.sunday){
-                        var sunday = 'Sunday: ' + req.body.sunday;
-                        lecture_time.push(sunday)
-                    }
-                    if(req.body.monday){
-                        var monday = 'Monday: ' + req.body.monday;
-                        lecture_time.push(monday)
-                    }
-                    if(req.body.tuesday){
-                        var tuesday = 'Tuesday: ' + req.body.tuesday;
-                        lecture_time.push(tuesday)
-                    }
-                    if(req.body.wednesday){
-                        var wednesday = 'Wednesday: ' + req.body.wednesday;
-                        lecture_time.push(wednesday)
-                    }
-                    if(req.body.thursday){
-                        var thursday = 'Thursday: ' + req.body.thursday;
-                        lecture_time.push(thursday)
-                    }
-                    var group_new = new Group({
-                        name: req.body.name,
-                        level_start_date: (req.body.level_start_date == '') ? Date.now : req.body.level_start_date,
-                        level_end_date: (req.body.level_end_date == '') ? Date.now : req.body.level_end_date,
-                        current_level: req.body.level_choose,
-                        lecture_time: lecture_time,
-                        status: req.body.status,
-                        _id: req.params.id,
-                    })
+            if (req.body.saturday) {
+                var saturday = 'Saturday: ' + req.body.saturday;
+                lecture_time.push(saturday)
+            }
+            if (req.body.sunday) {
+                var sunday = 'Sunday: ' + req.body.sunday;
+                lecture_time.push(sunday)
+            }
+            if (req.body.monday) {
+                var monday = 'Monday: ' + req.body.monday;
+                lecture_time.push(monday)
+            }
+            if (req.body.tuesday) {
+                var tuesday = 'Tuesday: ' + req.body.tuesday;
+                lecture_time.push(tuesday)
+            }
+            if (req.body.wednesday) {
+                var wednesday = 'Wednesday: ' + req.body.wednesday;
+                lecture_time.push(wednesday)
+            }
+            if (req.body.thursday) {
+                var thursday = 'Thursday: ' + req.body.thursday;
+                lecture_time.push(thursday)
+            }
+            var group_new = new Group({
+                name: req.body.name,
+                level_start_date: (req.body.level_start_date == '') ? Date.now : req.body.level_start_date,
+                level_end_date: (req.body.level_end_date == '') ? Date.now : req.body.level_end_date,
+                current_level: req.body.level_choose,
+                lecture_time: lecture_time,
+                status: req.body.status,
+                _id: req.params.id,
+            })
             Group.findByIdAndUpdate(req.params.id, group_new, (err, result) => {
                 if (err) { return next(err); }
                 res.redirect('/admin/level/group/' + result.url)
@@ -275,27 +284,118 @@ exports.group_update_post = [
     }
 ];
 
-exports.group_new_lecture_get = (req, res, next) =>{
+/***************************************************************************************/
+
+// GET Add New Meeting
+exports.group_new_meeting_get = (req, res, next) => {
     async.parallel({
-        group: (cb) =>{
+        group: (cb) => {
             Group.findById(req.params.id)
-            .populate('current_level')
-            .exec(cb)
+                .populate('current_level')
+                .exec(cb)
         },
         students: (cb) => {
             Student.find({ 'group': req.params.id })
                 .populate('group')
                 .exec(cb)
         }
-    }, (err, results) =>{
+    }, (err, results) => {
         var list2 = []
         for (var value of results.students) {
             list2.push(value)
         }
-        if(err) { return next(err); }
-        res.render('new_lecture', { title: 'New lecture', group: results.group, students: list2 })
+        if (err) { return next(err); }
+        res.render('new_meeting', { title: 'New meeting', group: results.group, students: list2 })
     })
 }
-exports.group_new_lecture_post = (req, res, next) =>{
-    res.send('not yet!');
-}
+// POST Add New Meeting
+exports.group_new_meeting_post = [
+    (req, res, next) => {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            async.parallel({
+                group: (cb) => {
+                    Group.findById(req.params.id)
+                        .populate('current_level')
+                        .exec(cb)
+                },
+                students: (cb) => {
+                    Student.find({ 'group': req.params.id })
+                        .populate('group')
+                        .exec(cb)
+                }
+            }, (err, results) => {
+                var list2 = []
+                for (var value of results.students) {
+                    list2.push(value)
+                }
+                if (err) { return next(err); }
+                res.render('new_meeting', { title: 'New meeting', group: results.group, students: list2 })
+            })
+        } else {
+            async.parallel({
+                group: (cb) => {
+                    Group.findById(req.params.id)
+                        .populate('current_level')
+                        .exec(cb)
+                },
+            }, (err, results) => {
+                if (err) { return next(err); }
+                switch (results.group.current_level.name) {
+                    case 'Level1':
+                        if (req.body.attended.constructor === Array) {
+                            for (var x of req.body.attended) {
+                                Absent.findOneAndUpdate({ student: x }, { $inc: { level1: 1 } }, { new: true })
+                                    .exec()
+                            }
+                        } else {
+                            Absent.findOneAndUpdate({ student: req.body.attended }, { $inc: { level1: 1 } }, { new: true })
+                                .exec()
+                        }
+                        break;
+
+                    case 'Level2':
+                        if (req.body.attended.constructor === Array) {
+                            for (var x of req.body.attended) {
+                                Absent.findOneAndUpdate({ student: x }, { $inc: { level2: 1 } }, { new: true })
+                                    .exec()
+                            }
+                        } else {
+                            Absent.findOneAndUpdate({ student: req.body.attended }, { $inc: { level2: 1 } }, { new: true })
+                                .exec()
+                        }
+                        break;
+
+                    case 'Level3':
+                        if (req.body.attended.constructor === Array) {
+                            for (var x of req.body.attended) {
+                                Absent.findOneAndUpdate({ student: x }, { $inc: { level3: 1 } }, { new: true })
+                                    .exec()
+                            }
+                        } else {
+                            Absent.findOneAndUpdate({ student: req.body.attended }, { $inc: { level3: 1 } }, { new: true })
+                                .exec()
+                        }
+                        break;
+
+                    case 'Level4':
+                        if (req.body.attended.constructor === Array) {
+                            for (var x of req.body.attended) {
+                                Absent.findOneAndUpdate({ student: x }, { $inc: { level4: 1 } }, { new: true })
+                                    .exec()
+                            }
+                        } else {
+                            Absent.findOneAndUpdate({ student: req.body.attended }, { $inc: { level4: 1 } }, { new: true })
+                                .exec()
+                        }
+                        break;
+                }
+                res.redirect('/admin/level/group/' + req.params.id)
+            })
+        }
+    }
+
+]
+
+/***************************************************************************************/
