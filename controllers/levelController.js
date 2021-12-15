@@ -46,11 +46,19 @@ exports.level_detail = (req, res, next) => {
             .populate('current_level')
             .exec(cb)
         },
-    }, function(err, results) {
-        if (err) { return next(err); } // Error in API usage.
-
+    }, (err, results) =>{
+        if (err) { return next(err); }
+        var count = []
+        for(var i = 0; i < results.group.length; i++ ){
+            var x = results.group[i]._id
+            Student.countDocuments({ 'group': x })
+            .exec((err, result) =>{
+                if (err) { return next(err); }
+                count.push(result)
+            })
+        }
         // Successful, so render.
-        res.render('level_detail', { title: 'Level Detail', level_groups: results.group, level: results.level });
+        res.render('level_detail', { title: 'Level Detail', level_groups: results.group, level: results.level, count: count });
     });
 
 };
@@ -139,7 +147,7 @@ exports.level_update_post = [
             return;
         }
         else{
-            Level.findByIdAndUpdate(req.params.id, level_new, {}, (err, thelevel) =>{
+            Level.findByIdAndUpdate(req.params.id, level_new, (err, thelevel) =>{
                 if(err) { return next(err); }
                 res.redirect('/admin/level/' + thelevel.url)
             })
