@@ -234,15 +234,6 @@ exports.student_update_post = [
 
         const errors = validationResult(req);
 
-        var student_new = new Student({
-            name: req.body.name,
-            phone_number: req.body.phone_number,
-            group: req.body.group_choose,
-            status: req.body.status,
-            enroll_date: (req.body.enroll_date == '') ? Date.now : req.body.enroll_date,
-            _id: req.params.id,
-        })
-
         if (!errors.isEmpty()) {
             async.parallel({
                 group: (cb) => {
@@ -259,11 +250,42 @@ exports.student_update_post = [
                 res.render('student_form', { title: 'Update Student', groups: results.group, student: results.student, errors: errors.array() })
             })
             return;
-        }
-        else {
-            Student.findByIdAndUpdate(req.params.id, student_new, {}, (err, result) => {
+        } else {
+            async.parallel({
+
+                group: (cb) => {
+                    Group.find()
+                        .sort([['name', 'ascending']])
+                        .exec(cb)
+                },
+                student: (cb) => {
+                    Student.findById(req.params.id)
+                        .exec(cb)
+                },
+                chosen_student: (cb) => {
+                    Student.findOne({ name: req.body.name })
+                        .exec(cb)
+                },
+            }, (err, result) => {
                 if (err) { return next(err); }
-                res.redirect('/admin/level/group/student/' + result.url)
+                if (result.chosen_student) {
+                    const Err = 'The name "' + results.chosen_student.name + '" is not available'
+                    res.render('student_form', { title: 'Update Student', groups: results.group, student: results.student, err: Err })
+                } else {
+                    var student_new = new Student({
+                        name: req.body.name,
+                        phone_number: req.body.phone_number,
+                        group: req.body.group_choose,
+                        status: req.body.status,
+                        enroll_date: (req.body.enroll_date == '') ? Date.now : req.body.enroll_date,
+                        _id: req.params.id,
+                    })
+        
+                    Student.findByIdAndUpdate(req.params.id, student_new, {}, (err, result) => {
+                        if (err) { return next(err); }
+                        res.redirect('/admin/level/group/student/' + result.url)
+                    })
+                }
             })
         }
     }
@@ -273,11 +295,6 @@ exports.student_update_post = [
 // Absent Students
 exports.student_absent_list_get = (req, res, next) => {
     async.parallel({
-        student: (cb) => {
-            Student.find()
-                .populate('current_level')
-                .exec(cb)
-        },
         absent: (cb) => {
             Absent.find({ level1: { $gte: 2 } })
         },
