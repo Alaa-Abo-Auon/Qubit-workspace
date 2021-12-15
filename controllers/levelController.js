@@ -61,7 +61,6 @@ exports.level_detail = (req, res, next) => {
                 count.push(result)
             })
         }
-        // Successful, so render.
         res.render('level_detail', { title: 'Level Detail', level_groups: results.group, level: results.level, count: count });
     });
 
