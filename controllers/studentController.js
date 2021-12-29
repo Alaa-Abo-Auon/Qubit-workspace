@@ -50,7 +50,7 @@ exports.student_create_post = [
     body('status').trim().isLength({ min: 1 }).escape().withMessage('Choose the status is required.'),
 
     (req, res, next) => {
-        
+
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
@@ -182,9 +182,9 @@ exports.student_delete_post = (req, res, next) => {
         else {
             Student.findByIdAndRemove(req.body.delete, (err) => {
                 if (err) { return next(err); }
-                Absent.countDocuments({ student: req.body.delete }, (err, num) =>{
-                    if(num > 0){
-                        Absent.findOneAndDelete(req.body.delete, (err) =>{
+                Absent.countDocuments({ student: req.body.delete }, (err, num) => {
+                    if (num > 0) {
+                        Absent.findOneAndDelete(req.body.delete, (err) => {
                             if (err) { return next(err); }
                         })
                     }
@@ -264,16 +264,44 @@ exports.student_update_post = [
 // Absent Students
 exports.student_absent_list_get = (req, res, next) => {
     async.parallel({
-        student: (cb) =>{
+        student: (cb) => {
             Absent.find()
-            .populate({
-                path: 'student',
-                populate: { path: 'group' },
-            })
-            .exec(cb)
+                .populate({
+                    path: 'student',
+                    populate: { path: 'group' },
+                })
+                .exec(cb)
         }
-    }, (err, result) =>{
+    }, (err, result) => {
         if (err) { return next(err); }
-        res.render('student_absent', { title: 'Absent students', students: result.student });
+        var students_res = result.student
+        var std = []
+        // console.log(students_res);
+            for (var n of students_res) {
+                async.parallel({
+                    student_abs: (cb) => {
+                        Absent.countDocuments({
+                            student: n.student._id,
+                            level: n.student.current_level,
+                        })
+                            .exec(cb)
+                    },
+                }, (err, results) => {
+                    if (err) { return next(err); }
+                    var x = {
+                        'id': n.student._id,
+                        'name': n.student.name,
+                        'phone': n.student.phone_number,
+                        'group': n.student.group.name,
+                        'abs': results.student_abs,
+                    }
+                    std.push(x)
+                    console.log(std);
+                })
+            }
+        res.render('student_absent', { title: 'Absent students', students: std });
     })
 }
+
+/***************************************************************************************/
+

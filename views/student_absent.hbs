@@ -1,5 +1,3 @@
-{{!-- table with full list of absent students sorted by latest absent object --}}
-{{!-- table should have filters with level's --}}
 <h1>{{title}}</h1>
 <hr>
 <div style="margin-left:20px;margin-top:20px">
@@ -16,13 +14,13 @@
             {{#each students as |student|}}
             <tr>
                 <td>
-                    <a href='/admin/level/group/student/{{student.student._id}}'>{{student.student.name}}</a>
+                    <a href='/admin/level/group/student/{{student._id}}'>{{student.name}}</a>
                 </td>
                 <td>
-                    {{student.student.phone_number}}
+                    {{student.phone}}
                 </td>
                 <td>
-                    {{student.student.group.name}}
+                    {{student.group}}
                 </td>
             </tr>
             {{/each}}
