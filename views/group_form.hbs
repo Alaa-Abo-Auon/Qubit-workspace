@@ -16,14 +16,14 @@
     </div>
     <div>
         {{#if levels}}
-        <div  class="mb-3 mt-2">
-            <label class="form-label"><strong>Choose the level:</strong></label>
-            <select class="form-select" name="level_choose">
-                {{#each levels as |level|}}
-                    <option value={{level._id}}>{{level.name}}</option>
-                {{/each}}
-            </select>
-        </div>
+            <div  class="mb-3 mt-2">
+                <label class="form-label"><strong>Choose the level:</strong></label>
+                <select class="form-select" name="level_choose">
+                    {{#each levels as |level|}}
+                        <option value={{level._id}}>{{level.name}}</option>
+                    {{/each}}
+                </select>
+            </div>
         {{else}}
             <label class="form-label"><strong>Choose the level:</strong></label>
             <span class="text-danger">

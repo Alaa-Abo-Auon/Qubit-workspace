@@ -28,14 +28,18 @@
             </tbody>
         </table>
     {{else}}
-        <p class="text-danger">This level has no groups.</p>
+        <p class="text-danger">This level has no groups</p>
     {{/if}}
     <hr>
     <h4>{{title}}</h4>
     <hr style="width: 18%;">
-    <p>
+    <div class="type">
+        <strong>#Level Type:</strong>
+        <span>{{level.type}}</span>
+    </div>
+    <div class="mt-2 mb-2">
         <span><strong>#Number of Days:</strong> {{level.total_days}}</span>
-    </p>
+    </div>
     <div class="description">
         <strong>#The Description</strong>
         <p>{{level.description}}</p>

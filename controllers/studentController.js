@@ -4,6 +4,7 @@ const Level = require('../models/level');
 const Absent = require('../models/absent');
 const async = require('async');
 const { body, validationResult } = require('express-validator');
+const student = require('../models/student');
 
 
 // Student List 
@@ -41,7 +42,6 @@ exports.student_create_get = (req, res, next) => {
 // POST Create New Student
 exports.student_create_post = [
 
-    // Validate and sanitize fields.
     body('name').trim().isLength({ min: 1 }).escape().withMessage('Student name is required.'),
     body('phone_number').trim().isLength({ min: 1 }).escape().withMessage('Student phone number is required.'),
     body('group_choose').trim().isLength({ min: 1 }).escape().withMessage('Choose the group is required.'),
@@ -49,9 +49,8 @@ exports.student_create_post = [
     body('enroll_date').trim().isLength({ min: 1 }).escape().withMessage('Enroll date is required.'),
     body('status').trim().isLength({ min: 1 }).escape().withMessage('Choose the status is required.'),
 
-    // Process request after validation and sanitization.
     (req, res, next) => {
-        // Extract the validation errors from a request.
+        
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
@@ -70,7 +69,7 @@ exports.student_create_post = [
                 if (err) { return next(err); }
                 res.render('student_form', { title: 'Register a new student', student: req.body, groups: results.group, levels: results.level, errors: errors.array() });
             })
-            return
+            return;
         } else {
             async.parallel({
                 student: (cb) => {
@@ -115,13 +114,6 @@ exports.student_create_post = [
                         });
                         student.save((err, result) => {
                             if (err) { return next(err); }
-                            console.log(result._id);
-                            const absent = new Absent({
-                                student: result._id
-                            })
-                            absent.save((err) => {
-                                if (err) { return next(err); }
-                            })
                             res.redirect('/admin/students');
                         })
                     } else {
@@ -138,7 +130,7 @@ exports.student_create_post = [
                             },
                         }, (err, results) => {
                             if (err) { return next(err); }
-                            const Err = 'The group you chose is not in the level "' + chosen_level + '"'
+                            const Err = 'The group you chose is not in "' + chosen_level + '"'
                             res.render('student_form', { title: 'Register a new student', student: req.body, groups: results.group, levels: results.level, err: Err });
                         })
                     }
@@ -182,10 +174,6 @@ exports.student_delete_post = (req, res, next) => {
             Student.findById(req.params.id)
                 .exec(cb)
         },
-        absent: (cb) => {
-            Absent.findById(req.params.id)
-                .exec(cb)
-        }
     }, (err, results) => {
         if (err) { return next(err); }
         if (results.student.length > 0) {
@@ -194,10 +182,14 @@ exports.student_delete_post = (req, res, next) => {
         else {
             Student.findByIdAndRemove(req.body.delete, (err) => {
                 if (err) { return next(err); }
-                Absent.findOneAndRemove(req.body.delete, (err) => {
-                    if (err) { return next(err); }
-                    res.redirect('/admin/students')
+                Absent.countDocuments({ student: req.body.delete }, (err, num) =>{
+                    if(num > 0){
+                        Absent.findOneAndDelete(req.body.delete, (err) =>{
+                            if (err) { return next(err); }
+                        })
+                    }
                 })
+                res.redirect('/admin/students')
             })
         }
     })
@@ -251,41 +243,18 @@ exports.student_update_post = [
             })
             return;
         } else {
-            async.parallel({
+            var student_new = new Student({
+                name: req.body.name,
+                phone_number: req.body.phone_number,
+                group: req.body.group_choose,
+                status: req.body.status,
+                enroll_date: (req.body.enroll_date == '') ? Date.now : req.body.enroll_date,
+                _id: req.params.id,
+            })
 
-                group: (cb) => {
-                    Group.find()
-                        .sort([['name', 'ascending']])
-                        .exec(cb)
-                },
-                student: (cb) => {
-                    Student.findById(req.params.id)
-                        .exec(cb)
-                },
-                chosen_student: (cb) => {
-                    Student.findOne({ name: req.body.name })
-                        .exec(cb)
-                },
-            }, (err, result) => {
+            Student.findByIdAndUpdate(req.params.id, student_new, (err, result) => {
                 if (err) { return next(err); }
-                if (result.chosen_student) {
-                    const Err = 'The name "' + results.chosen_student.name + '" is not available'
-                    res.render('student_form', { title: 'Update Student', groups: results.group, student: results.student, err: Err })
-                } else {
-                    var student_new = new Student({
-                        name: req.body.name,
-                        phone_number: req.body.phone_number,
-                        group: req.body.group_choose,
-                        status: req.body.status,
-                        enroll_date: (req.body.enroll_date == '') ? Date.now : req.body.enroll_date,
-                        _id: req.params.id,
-                    })
-        
-                    Student.findByIdAndUpdate(req.params.id, student_new, {}, (err, result) => {
-                        if (err) { return next(err); }
-                        res.redirect('/admin/level/group/student/' + result.url)
-                    })
-                }
+                res.redirect('/admin/level/group/student/' + result.url)
             })
         }
     }
@@ -295,12 +264,16 @@ exports.student_update_post = [
 // Absent Students
 exports.student_absent_list_get = (req, res, next) => {
     async.parallel({
-        absent: (cb) => {
-            Absent.find({ level1: { $gte: 2 } })
-        },
-    }, (err, results) => {
+        student: (cb) =>{
+            Absent.find()
+            .populate({
+                path: 'student',
+                populate: { path: 'group' },
+            })
+            .exec(cb)
+        }
+    }, (err, result) =>{
         if (err) { return next(err); }
-
+        res.render('student_absent', { title: 'Absent students', students: result.student });
     })
-    res.render('student_absent', { title: 'Absent students', });
 }

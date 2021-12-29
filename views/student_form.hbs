@@ -14,25 +14,25 @@
         <label class="form-label" for="enroll_date"><strong>Enroll date:</strong></label>
         <input id="enroll_date" min="2020-01-01" type="date" name="enroll_date" class="form-control" value={{student.enroll_date}}>
     </div>
-    {{#if levels}}
-        <div>
+    <div>
+        {{#if levels}}
+            <label class="form-label"><strong>Choose the level:</strong></label>
+            <div class="mb-3">
+                <select class="form-select" name="level_choose">
+                    {{#each levels as |level|}}
+                        <option value={{level._id}}>{{level.name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        {{else}}
             {{#if levels}}
-                <label class="form-label"><strong>Choose the level:</strong></label>
-                <div class="mb-3">
-                    <select class="form-select" name="level_choose">
-                        {{#each levels as |level|}}
-                            <option value={{level._id}}>{{level.name}}</option>
-                        {{/each}}
-                    </select>
-                </div>
-            {{else}}
                 <label class="form-label"><strong>Choose the level:</strong></label>
                 <span class="text-danger">
                     Create Level First
                 </span>
             {{/if}}
-        </div>
-    {{/if}}
+        {{/if}}
+    </div>
     <div>
         {{#if groups}}
             <label class="form-label"><strong>Choose the group:</strong></label>

@@ -1,2 +1,31 @@
 {{!-- table with full list of absent students sorted by latest absent object --}}
 {{!-- table should have filters with level's --}}
+<h1>{{title}}</h1>
+<hr>
+<div style="margin-left:20px;margin-top:20px">
+    <h4>Absent Table</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Student Name</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Current Group</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each students as |student|}}
+            <tr>
+                <td>
+                    <a href='/admin/level/group/student/{{student.student._id}}'>{{student.student.name}}</a>
+                </td>
+                <td>
+                    {{student.student.phone_number}}
+                </td>
+                <td>
+                    {{student.student.group.name}}
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

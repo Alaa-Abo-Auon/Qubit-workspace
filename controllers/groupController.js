@@ -11,7 +11,6 @@ exports.group_list = (req, res, next) => {
         .sort([['name', 'ascending']])
         .exec(function (err, results) {
             if (err) { return next(err); }
-            //Successful, so render
             res.render('group_list', { title: 'All Groups', group_list: results });
         });
 }
@@ -35,17 +34,14 @@ exports.group_create_get = (req, res, next) => {
 // POST Create New Group
 exports.group_create_post = [
 
-    // Validate and sanitize fields.
     body('name').trim().isLength({ min: 1 }).escape().withMessage('Group name is required.'),
     body('level_start_date').trim().isLength({ min: 1 }).escape().withMessage('The level start date is required.'),
     body('level_end_date').trim().isLength({ min: 1 }).escape().withMessage('The level end date is required.'),
     body('level_choose').trim().isLength({ min: 1 }).escape().withMessage('Choose the level is required.'),
     body('status').trim().isLength({ min: 1 }).escape().withMessage('Choose the status is required.'),
 
-    // Process request after validation and sanitization.
     (req, res, next) => {
 
-        // Extract the validation errors from a request.
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
@@ -88,7 +84,6 @@ exports.group_create_post = [
                         { thursday: req.body.thursday },
                     ];
 
-                    // Create new group
                     var group = new Group({
                         name: req.body.name,
                         level_end_date: req.body.level_end_date,
@@ -97,11 +92,11 @@ exports.group_create_post = [
                         lecture_time: lecture_time,
                         status: req.body.status,
                     });
-                    group.save((err, results) => {
+                    
+                    group.save((err) => {
                         if (err) { return next(err); }
-
                         res.redirect('/admin/groups');
-                    })
+                    });
                 }
             })
         }
@@ -125,17 +120,14 @@ exports.group_detail = (req, res, next) => {
                 .exec(cb)
         }
     }, (err, results) => {
+        if (err) { return next(err); }
         var name = results.group.current_level.name;
         Level.find()
             .exec((err, next_level) => {
                 if (err) { return next(err); }
                 var index = next_level.findIndex(i => i.name === name)
                 var c = index + 1
-                var list = []
-                for (var value of results.students) {
-                    list.push(value)
-                }
-                res.render('group_detail', { title: 'Group Detail', students: list, group: results.group, next_level: next_level[c] })
+                res.render('group_detail', { title: 'Group Detail', students: results.students, group: results.group, next_level: next_level[c] })
             })
     })
 }
@@ -165,7 +157,7 @@ exports.group_delete_get = (req, res, next) => {
         res.render('group_delete', { title: 'Delete', groups: results.group, students: results.student })
     })
 }
-// POsT Group Delete
+// POST Group Delete
 exports.group_delete_post = (req, res, next) => {
     async.parallel({
         group: (cb) => {
@@ -233,25 +225,12 @@ exports.group_update_post = [
                         .exec(cb)
                 }
             }, (err, results) => {
-                if (err) { return next(err); }
+                if (err) { return next(err); }  
                 res.render('group_form', { title: 'Update Group', group: results.group, levels: results.level, errors: errors.array() })
             })
             return;
         }
         else {
-            async.parallel({
-                group: (cb) => {
-                    Group.findOne({ name: req.body.name })
-                        .exec(cb)
-                },
-                level: (cb) => {
-                    Level.find()
-                        .sort([['name', 'ascending']])
-                        .exec(cb)
-                }
-            }, (err, result) => {
-
-            })
             var lecture_time = [
                 { saturday: req.body.saturday },
                 { sunday: req.body.sunday },
@@ -260,6 +239,7 @@ exports.group_update_post = [
                 { wednesday: req.body.wednesday },
                 { thursday: req.body.thursday },
             ];
+
             var group_new = new Group({
                 name: req.body.name,
                 level_start_date: (req.body.level_start_date == '') ? Date.now : req.body.level_start_date,
@@ -269,9 +249,10 @@ exports.group_update_post = [
                 status: req.body.status,
                 _id: req.params.id,
             })
+
             Group.findByIdAndUpdate(req.params.id, group_new, (err, thegroup) => {
                 if (err) { return next(err); }
-                res.redirect('/admin/level/group/' + result.url)
+                res.redirect('/admin/level/group/' + thegroup.url)
             })
         }
     }
@@ -293,77 +274,28 @@ exports.group_new_meeting_get = (req, res, next) => {
                 .exec(cb)
         }
     }, (err, results) => {
-        var list2 = []
-        for (var value of results.students) {
-            list2.push(value)
-        }
         if (err) { return next(err); }
-        res.render('new_meeting', { title: 'New meeting', group: results.group, students: list2 })
+        res.render('new_meeting', { title: 'New meeting', group: results.group, students: results.students })
     })
 }
 // POST Add New Meeting
-exports.group_new_meeting_post = [
-    (req, res, next) => {
-        console.log(req.body)
-
-        const errors = validationResult(req);
-
-        if (!errors.isEmpty()) {
-            async.parallel({
-                group: (cb) => {
-                    Group.findById(req.params.id)
-                        .populate('current_level')
-                        .exec(cb)
-                },
-                students: (cb) => {
-                    Student.find({ 'group': req.params.id })
-                        .populate('group')
-                        .exec(cb)
-                }
-            }, (err, results) => {
-                var list2 = []
-                for (var value of results.students) {
-                    list2.push(value)
-                }
-                if (err) { return next(err); }
-                res.render('new_meeting', { title: 'New meeting', group: results.group, students: list2 })
+exports.group_new_meeting_post = (req, res, next) =>{
+    if(req.body.student.length > 0){
+        for(var i=0; req.body.student.length > i; i++){
+            var absent = new Absent({
+                level: req.body.student[i].level,
+                student: req.body.student[i].unattended,
+                reason: req.body.student[i].reason,
             })
-        } else {
-            async.parallel({
-                group: (cb) => {
-                    Group.findById(req.params.id)
-                        .populate('current_level')
-                        .exec(cb)
-                },
-            }, (err, results) => {
+            absent.save((err, data) =>{
                 if (err) { return next(err); }
-                for (var x of req.body.attended) {
-                    if(req.body.reason.includes(x)){
-                        var obj = new Absent({
-                            student: x,
-                            level: results.group.current_level._id,
-                            reason: true
-                        })
-                        obj.save((error, result) => {
-                            console.log(result)
-                        })
-                    }else{
-                        var obj = new Absent({
-                            student: x,
-                            level: results.group.current_level._id,
-                            reason: false
-                        })
-                        obj.save((error, result) => {
-                            console.log('wtf')
-                            console.log(result)
-                        })
-                    }
-                }
-                res.redirect('/admin/level/group/' + req.params.id)
             })
         }
+        res.redirect('/admin/level/group/' + req.params.id)
     }
-
-]
+    else{
+        res.redirect('/admin/level/group/' + req.params.id)
+    }
+}
 
 /***************************************************************************************/

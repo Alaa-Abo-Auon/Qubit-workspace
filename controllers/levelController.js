@@ -52,16 +52,7 @@ exports.level_detail = (req, res, next) => {
         },
     }, (err, results) =>{
         if (err) { return next(err); }
-        var count = []
-        for(var i = 0; i < results.group.length; i++ ){
-            var x = results.group[i]._id
-            Student.countDocuments({ 'group': x })
-            .exec((err, result) =>{
-                if (err) { return next(err); }
-                count.push(result)
-            })
-        }
-        res.render('level_detail', { title: 'Level Detail', level_groups: results.group, level: results.level, count: count });
+        res.render('level_detail', { title: 'Level Detail', level_groups: results.group, level: results.level });
     });
 
 };
@@ -76,14 +67,15 @@ exports.level_create_get = (req, res, next) => {
 // POST Create New Level
 exports.level_create_post = [
 
-    // Validate and sanitize fields.
+    
     body('name').trim().isLength({ min: 1 }).escape().withMessage('Level name is required.'),
     body('total_days').trim().isLength({ min: 1 }).escape().withMessage('Total days is required.'),
-    body('description').trim().isLength({ min: 1 }).escape().withMessage('description is required.'),
+    body('description').trim().isLength({ min: 1 }).escape().withMessage('Description is required.'),
+    body('type').trim().isLength({ min: 1 }).escape().withMessage('Level type is required.'),
 
-    // Process request after validation and sanitization.
+    
     (req, res, next) => {
-        // Extract the validation errors from a request.
+        
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
@@ -91,11 +83,12 @@ exports.level_create_post = [
             return;
         }
         else {
-            // Create new level
+            
             var level = new Level({
                 name: req.body.name,
                 total_days: req.body.total_days,
                 description: req.body.description,
+                type: req.body.type,
             });
             level.save((err) => {
                 if (err) { return next(err); }
@@ -122,7 +115,7 @@ exports.level_update_get = (req, res, next) => {
 }
 // POST Level Update
 exports.level_update_post = [
-    // Validate and sanitize fields.
+    
     body('name').trim().isLength({ min: 1 }).escape().withMessage('Level name must not be empty.'),
     body('total_days').trim().isLength({ min: 1 }).escape().withMessage('Total days must not be empty.'),
     body('description').trim().isLength({ min: 1 }).escape().withMessage('description must not be empty.'),
