@@ -8,6 +8,7 @@
                 <th scope="col">Student Name</th>
                 <th scope="col">Phone Number</th>
                 <th scope="col">Current Group</th>
+                <th scope="col">Absent Count</th>
             </tr>
         </thead>
         <tbody>
@@ -17,10 +18,13 @@
                     <a href='/admin/level/group/student/{{student._id}}'>{{student.name}}</a>
                 </td>
                 <td>
-                    {{student.phone}}
+                    {{student.phone_number}}
                 </td>
                 <td>
-                    {{student.group}}
+                    {{student.group.name}}
+                </td>
+                <td>
+                    {{ student.abs }}
                 </td>
             </tr>
             {{/each}}

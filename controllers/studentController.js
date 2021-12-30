@@ -5,6 +5,7 @@ const Absent = require('../models/absent');
 const async = require('async');
 const { body, validationResult } = require('express-validator');
 const student = require('../models/student');
+const absent = require('../models/absent');
 
 
 // Student List 
@@ -274,31 +275,20 @@ exports.student_absent_list_get = (req, res, next) => {
         }
     }, (err, result) => {
         if (err) { return next(err); }
-        var students_res = result.student
-        var std = []
-        // console.log(students_res);
-            for (var n of students_res) {
-                async.parallel({
-                    student_abs: (cb) => {
-                        Absent.countDocuments({
-                            student: n.student._id,
-                            level: n.student.current_level,
-                        })
-                            .exec(cb)
-                    },
-                }, (err, results) => {
-                    if (err) { return next(err); }
-                    var x = {
-                        'id': n.student._id,
-                        'name': n.student.name,
-                        'phone': n.student.phone_number,
-                        'group': n.student.group.name,
-                        'abs': results.student_abs,
-                    }
-                    std.push(x)
-                    console.log(std);
-                })
+        var std = [];
+        var x = [];
+        for(var w=0; w < result.student.length; w++){
+            x.push(result.student[w].student)
+        }
+        x.forEach(i =>{
+            if(!std.includes(i)){
+                i.abs = 1
+                std.push(i);
+            }else{
+                i.abs += 1
             }
+        })
+        console.log(std)
         res.render('student_absent', { title: 'Absent students', students: std });
     })
 }
