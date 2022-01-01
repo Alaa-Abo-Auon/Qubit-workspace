@@ -185,7 +185,7 @@ exports.student_delete_post = (req, res, next) => {
                 if (err) { return next(err); }
                 Absent.countDocuments({ student: req.body.delete }, (err, num) => {
                     if (num > 0) {
-                        Absent.findOneAndDelete(req.body.delete, (err) => {
+                        Absent.deleteMany({ student: req.body.delete }, (err) => {
                             if (err) { return next(err); }
                         })
                     }
@@ -288,7 +288,6 @@ exports.student_absent_list_get = (req, res, next) => {
                 i.abs += 1
             }
         })
-        console.log(std)
         res.render('student_absent', { title: 'Absent students', students: std });
     })
 }

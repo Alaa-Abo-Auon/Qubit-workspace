@@ -7,6 +7,7 @@
     <h6><strong>The group started the level in: </strong>{{group.short_level_start_date}}</h6>
     <h6><strong>The group should end the level in: </strong>{{group.short_level_end_date}}</h6>
     <h6><strong>Status: </strong>{{group.status}}</h6>
+    <h6><strong>Lecture attended: </strong>{{group.lecture_attended}}</h6>
     <p>
         <a href="/admin/level/group/{{group._id}}/new_meeting">New meeting</a>
     </p>
@@ -50,7 +51,6 @@
                     <th scope="col">Phone Number</th>
                     <th scope="col">Status</th>
                     <th scope="col">Enroll Date</th>
-                    <th scope="col">Absent days</th>
                 </tr>
             </thead>
             <tbody>

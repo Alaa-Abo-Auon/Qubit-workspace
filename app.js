@@ -9,7 +9,7 @@ var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
 
 // Connect To DataBase
-mongoose.connect('mongodb+srv://test:test@cluster0.feeli.mongodb.net/Qupit?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://test:test@cluster0.9a4zg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })

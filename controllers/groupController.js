@@ -123,12 +123,13 @@ exports.group_detail = (req, res, next) => {
         if (err) { return next(err); }
         var name = results.group.current_level.name;
         Level.find()
-            .exec((err, next_level) => {
-                if (err) { return next(err); }
-                var index = next_level.findIndex(i => i.name === name)
-                var c = index + 1
-                res.render('group_detail', { title: 'Group Detail', students: results.students, group: results.group, next_level: next_level[c] })
-            })
+        .exec((err, next_level) => {
+            if (err) { return next(err); }
+            var index = next_level.findIndex(i => i.name === name)
+            var c = index + 1
+            res.render('group_detail', { title: 'Group Detail', students: results.students, group: results.group, next_level: next_level[c] })
+        })
+
     })
 }
 
@@ -287,15 +288,58 @@ exports.group_new_meeting_post = (req, res, next) =>{
                 student: req.body.student[i].unattended,
                 reason: req.body.student[i].reason,
             })
-            absent.save((err, data) =>{
+            absent.save((err) =>{
                 if (err) { return next(err); }
             })
+            switch(req.body.student[i].level_name){
+                case 'Level1':
+                    Student.findByIdAndUpdate(req.body.student[i].unattended, { $inc: { level1: 1 }})
+                    .exec(err =>{
+                        if (err) { return next(err); }
+                    })
+                    break;
+                case 'Level2':
+                    Student.findByIdAndUpdate(req.body.student[i].unattended, { $inc: { level2: 1 }})
+                    .exec(err =>{
+                        if (err) { return next(err); }
+                    })
+                    break;
+                case 'Level3':
+                    Student.findByIdAndUpdate(req.body.student[i].unattended, { $inc: { level3: 1 }})
+                    .exec(err =>{
+                        if (err) { return next(err); }
+                    })
+                    break;
+                case 'Level4':
+                    Student.findByIdAndUpdate(req.body.student[i].unattended, { $inc: { level4: 1 }})
+                    .exec(err =>{
+                        if (err) { return next(err); }
+                    })
+                    break;
+                case 'Level5':
+                    Student.findByIdAndUpdate(req.body.student[i].unattended, { $inc: { level5: 1 }})
+                    .exec(err =>{
+                        if (err) { return next(err); }
+                    })
+                    break;
+                case 'Level6':
+                    Student.findByIdAndUpdate(req.body.student[i].unattended, { $inc: { level6: 1 }})
+                    .exec(err =>{
+                        if (err) { return next(err); }
+                    })
+                    break;
+            }
+            
         }
+        Group.findByIdAndUpdate(req.params.id, { $inc: { lecture_attended: 1 }}).exec((err) =>{
+            if (err) { return next(err); }
+        })
         res.redirect('/admin/level/group/' + req.params.id)
     }
     else{
         res.redirect('/admin/level/group/' + req.params.id)
     }
+    
 }
 
 /***************************************************************************************/

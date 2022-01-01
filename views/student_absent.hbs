@@ -1,33 +1,62 @@
 <h1>{{title}}</h1>
 <hr>
 <div style="margin-left:20px;margin-top:20px">
-    <h4>Absent Table</h4>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">Student Name</th>
-                <th scope="col">Phone Number</th>
-                <th scope="col">Current Group</th>
-                <th scope="col">Absent Count</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each students as |student|}}
-            <tr>
-                <td>
-                    <a href='/admin/level/group/student/{{student._id}}'>{{student.name}}</a>
-                </td>
-                <td>
-                    {{student.phone_number}}
-                </td>
-                <td>
-                    {{student.group.name}}
-                </td>
-                <td>
-                    {{ student.abs }}
-                </td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
+    {{#if students}}
+        <h4>Absent Table</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Student Name</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Current Group</th>
+                    <th scope="col">Level1</th>
+                    <th scope="col">Level2</th>
+                    <th scope="col">Level3</th>
+                    <th scope="col">Level4</th>
+                    <th scope="col">Level5</th>
+                    <th scope="col">Level6</th>
+                    <th scope="col">Absent Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each students as |student|}}
+                <tr>
+                    <td>
+                        <a href='/admin/level/group/student/{{student._id}}'>{{student.name}}</a>
+                    </td>
+                    <td>
+                        {{student.phone_number}}
+                    </td>
+                    <td>
+                        {{student.group.name}}
+                    </td>
+                    <td>
+                        {{student.level1}}
+                    </td>
+                    <td>
+                        {{student.level2}}
+                    </td>
+                    <td>
+                        {{student.level3}}
+                    </td>
+                    <td>
+                        {{student.level4}}
+                    </td>
+                    <td>
+                        {{student.level5}}
+                    </td>
+                    <td>
+                        {{student.level6}}
+                    </td>
+                    <td>
+                        {{ student.abs }}
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    {{else}}
+        <h6 class="text-danger">There is no students.</h6>
+    {{/if}}
+    
 </div>

@@ -10,6 +10,12 @@ var StudentSchema = new Schema({
   phone_number: { type: String, required: true },
   enroll_date: { type: Date },
   status: { type: String },
+  level1: {type: Number, default: 0 },
+  level2: {type: Number, default: 0 },
+  level3: {type: Number, default: 0 },
+  level4: {type: Number, default: 0 },
+  level5: {type: Number, default: 0 },
+  level6: {type: Number, default: 0 },
 });
 
 StudentSchema

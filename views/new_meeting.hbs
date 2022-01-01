@@ -1,6 +1,6 @@
 <h1>{{title}}</h1>
 <div style="margin-left:20px;margin-top:20px">
-    <h3>{{group.current_level.name}}</h3>
+    <h3 id="level_name">{{group.current_level.name}}</h3>
     <div id="title" style="display: none;">{{group.current_level._id}}</div>
     {{#if students}}
         <div>
@@ -44,6 +44,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     var title =  document.getElementById('title').innerHTML
+    var level_name = document.getElementById('level_name').innerHTML
     function checked(){
         var list = [];
         var i = 0;
@@ -55,7 +56,7 @@
             }else{
                 reason = false
             }
-            list.push({ 'level': title, 'unattended' : val, 'reason' : reason })
+            list.push({ 'level': title, 'level_name': level_name, 'unattended' : val, 'reason' : reason })
             i++;
         }
         $.ajax({
@@ -66,5 +67,6 @@
             data: JSON.stringify({ 'student' : list }),
             dataType: 'json',
         });
+        window.location.href = '/admin/level/group/{{group._id}}'
     }
 </script>
