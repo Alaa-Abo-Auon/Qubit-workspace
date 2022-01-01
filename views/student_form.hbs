@@ -3,20 +3,20 @@
 </div>
 <form method="POST" action="">
     <div class="mb-3">
-        <label class="form-label" for="Name"><strong>Student name:</strong></label>
+        <label class="form-label" for="Name"><strong>Student name: <span class="text-danger">*</span></strong></label>
         <input id="name" type="text" placeholder="The student name..." name="name" class="form-control" value='{{student.name}}'>
     </div>
     <div class="mb-3">
-        <label class="form-label" for="phone_number"><strong>Phone number:</strong></label>
+        <label class="form-label" for="phone_number"><strong>Phone number: <span class="text-danger">*</span></strong></label>
         <input id="phone_number" min="0" placeholder="Student phone number..."  type="number" name="phone_number" class="form-control" value={{student.phone_number}}>
     </div>
     <div class="mb-3">
-        <label class="form-label" for="enroll_date"><strong>Enroll date:</strong></label>
+        <label class="form-label" for="enroll_date"><strong>Enroll date: <span class="text-danger">*</span></strong></label>
         <input id="enroll_date" min="2020-01-01" type="date" name="enroll_date" class="form-control" value={{student.enroll_date}}>
     </div>
     <div>
         {{#if levels}}
-            <label class="form-label"><strong>Choose the level:</strong></label>
+            <label class="form-label"><strong>Choose the level: <span class="text-danger">*</span></strong></label>
             <div class="mb-3">
                 <select class="form-select" name="level_choose">
                     {{#each levels as |level|}}
@@ -35,7 +35,7 @@
     </div>
     <div>
         {{#if groups}}
-            <label class="form-label"><strong>Choose the group:</strong></label>
+            <label class="form-label"><strong>Choose the group: <span class="text-danger">*</span></strong></label>
             <div class="mb-3">
                 <select class="form-select" name="group_choose">
                     {{#each groups as |group|}}
@@ -51,7 +51,7 @@
         {{/if}}
     </div>
     <div class="mb-3">
-        <label class="form-label"><strong>Status:</strong></label>
+        <label class="form-label"><strong>Status: <span class="text-danger">*</span></strong></label>
         <select id="status" class="form-select" name="status">
             <option value="Active">Active</option>
             <option value="Passed">Passed</option>

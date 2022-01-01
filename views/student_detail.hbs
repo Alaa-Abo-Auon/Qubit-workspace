@@ -3,22 +3,17 @@
 </div>
 <hr>
 <div>
-    <h6><u>Student name:</u> {{student_detail.name}}</h6>
-    <br>
-    <h6><u>Phone number:</u> {{student_detail.phone_number}}</h6>
-    <br>
-    <h6><u>Enroll date:</u> {{student_detail.due_back_formatted}}</h6>
-    <br>
-    <h6><u>Current group:</u> {{student_detail.group.name}}</h6>
-    <br>
-    <h6><u>Current level:</u> {{student_detail.group.current_level.name}}</h6>
-    <br>
-    <h6><u>Status:</u> {{student_detail.status}}</h6>
+    <p><strong>Student name:</strong> {{student_detail.name}}</p>
+    <p><strong>Phone number:</strong> {{student_detail.phone_number}}</p>
+    <p><strong>Enroll date:</strong> {{student_detail.due_back_formatted}}</p>
+    <p><strong>Current group:</strong> {{student_detail.group.name}}</p>
+    <p><strong>Current level:</strong> {{student_detail.group.current_level.name}}</p>
+    <p><strong>Status:</strong> {{student_detail.status}}</p>
     <hr>
-    <p>
-        <a class="text-success" href='{{student_detail.url}}/update'>Update Student</a>
-    </p>
-    <p>
+    <h6>
+        <a class="text-success" href='{{student_detail.url}}/uh6date'>Update Student</a>
+    </h6>
+    <h6>
         <a class="text-danger" href='{{student_detail.url}}/delete'>Delete Student</a>
-    </p>
+    </h6>
 </div>

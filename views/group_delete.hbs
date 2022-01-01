@@ -1,8 +1,8 @@
 <h1>Delete {{groups.name}}</h1>
 <div style='margin-left:20px;margin-top:20px'>
     {{#if students.length}}
-        <p>Delete the following students before attempting to delete this group.</p>
-        <h4>Students</h4>
+        <h6>Delete the following students before attempting to delete this group</h6>
+        <h4>Students:</h4>
         <ul>
             {{#each students as |student|}}
                 <li>
@@ -11,14 +11,15 @@
             {{/each}}
         </ul>
     {{else}}
-        <p>
+        <h6>
             Do you really want to delete this Group?
-        </p>
+        </h6>
+        <br>
         <form method="POST" action="">
             <div class="form-group">
                <input id="delete" class="form-control" type='hidden' name='delete' value={{groups._id}}>
             </div>
-            <button class="btn btn-primary" type='submit'>Delete</button>
+            <span><button class="btn btn-danger" type='submit'>Delete</button> &nbsp;&nbsp;&nbsp;&nbsp; <a class="btn btn-primary" href="/admin/level/group/{{groups._id}}" role="button">Cancel</a></span>
         </form>
   {{/if}}
 </div>

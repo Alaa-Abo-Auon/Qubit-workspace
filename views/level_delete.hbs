@@ -2,9 +2,9 @@
 <h1>Delete {{level.name}}</h1>
 <div style='margin-left:20px;margin-top:20px'>
     {{#if group.length}}
-        <p>
+        <h6>
             Delete the following groups before attempting to delete this level.
-        </p>
+        </h6>
         <ul>
             {{#each group as |group|}}
                 <li>
@@ -13,14 +13,15 @@
             {{/each}}
         </ul>
     {{else}}
-        <p>
+        <h6>
             Do you really want to delete this level?
-        </p>
+        </h6>
         <form method="POST" action="">
             <div class="form-group">
                <input id="del" class="form-control" type='hidden' name='del' value={{level._id}}>
             </div>
-            <button class="btn btn-primary" type='submit'>Delete</button>
+            <br>
+            <span><button class="btn btn-danger" type='submit'>Delete</button> &nbsp;&nbsp;&nbsp;&nbsp; <a class="btn btn-primary" href="/admin/level/{{level._id}}" role="button">Cancel</a></span>
         </form>
   {{/if}}
 </div>

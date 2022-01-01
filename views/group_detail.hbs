@@ -8,9 +8,9 @@
     <h6><strong>The group should end the level in: </strong>{{group.short_level_end_date}}</h6>
     <h6><strong>Status: </strong>{{group.status}}</h6>
     <h6><strong>Lecture attended: </strong>{{group.lecture_attended}}</h6>
-    <p>
+    <h6>
         <a href="/admin/level/group/{{group._id}}/new_meeting">New meeting</a>
-    </p>
+    </h6>
     <hr>
     <h4>Meeting Time</h4>
     <hr style="width: 18%;">
@@ -89,10 +89,11 @@
         </form>
         <br>
     {{/if}}
-    <p>
+    <h6>
         <a class="text-success" href='{{group.url}}/update'>Update {{group.name}}</a>
-    </p>
-    <p>
+    </h6>
+    <h6>
         <a class="text-danger" href='{{group.url}}/delete'>Delete {{group.name}}</a>
-    </p>
+    </h6>
+    <br>
 <div>

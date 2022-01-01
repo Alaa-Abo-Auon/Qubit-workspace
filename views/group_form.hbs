@@ -3,21 +3,21 @@
 </div>
 <form method="POST" action="">
     <div class="mb-3">
-        <label class="form-label" for="Name"><strong>Group name:</strong></label>
+        <label class="form-label" for="Name"><strong>Group name: <span class="text-danger">*</span></strong></label>
         <input id="name" type="text" placeholder="The group name..." name="name" class="form-control" value='{{group.name}}'>
     </div>
     <div class="mb-3">
-        <label class="form-label" for="Start"><strong>Level start date:</strong></label>
+        <label class="form-label" for="Start"><strong>Level start date: <span class="text-danger">*</span></strong></label>
         <input id="level_start_date" min="2020-01-01" type="date" name="level_start_date" class="form-control">
     </div>
      <div class="mb-3">
-        <label class="form-label" for="Start"><strong>Level end date:</strong></label>
+        <label class="form-label" for="Start"><strong>Level end date: <span class="text-danger">*</span></strong></label>
         <input id="level_end_date" min="2020-01-01" type="date" name="level_end_date" class="form-control">
     </div>
     <div>
         {{#if levels}}
             <div  class="mb-3 mt-2">
-                <label class="form-label"><strong>Choose the level:</strong></label>
+                <label class="form-label"><strong>Choose the level: <span class="text-danger">*</span></strong></label>
                 <select class="form-select" name="level_choose">
                     {{#each levels as |level|}}
                         <option value={{level._id}}>{{level.name}}</option>
@@ -32,7 +32,7 @@
         {{/if}}
     </div>
     <div class="mb-3">
-        <label class="form-label"><strong>Status:</strong></label>
+        <label class="form-label"><strong>Status: <span class="text-danger">*</span></strong></label>
         <select id="status" class="form-select" name="status">
             <option value="Active">Active</option>
             <option value="Passed">Passed</option>

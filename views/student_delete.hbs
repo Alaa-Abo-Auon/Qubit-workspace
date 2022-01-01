@@ -1,12 +1,13 @@
 <h1>{{title}} {{student.name}}</h1>
 <div style="margin-left:20px;margin-top:20px">
-    <p>
+    <h6>
         Do you really want to delete this student ?
-    </p>
+    </h6>
+    <br>
     <form method="POST" action="">
         <div class="form-group">
             <input id="delete" class="form-control" type='hidden' name='delete' value={{student._id}}>
         </div>
-        <button class="btn btn-primary" type='submit'>Delete</button>
+        <span><button class="btn btn-danger" type='submit'>Delete</button> &nbsp;&nbsp;&nbsp;&nbsp; <a class="btn btn-primary" href="/admin/level/group/student/{{student._id}}" role="button">Cancel</a></span>
     </form>
 </div>

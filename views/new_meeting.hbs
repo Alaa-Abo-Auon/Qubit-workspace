@@ -1,8 +1,8 @@
 <h1>{{title}}</h1>
 <div style="margin-left:20px;margin-top:20px">
-    <h3 id="level_name">{{group.current_level.name}}</h3>
-    <div id="title" style="display: none;">{{group.current_level._id}}</div>
     {{#if students}}
+        <h3 id="level_name">{{group.current_level.name}}</h3>
+        <div id="title" style="display: none;">{{group.current_level._id}}</div>
         <div>
             <table class="table table-striped">
                 <thead>
@@ -36,9 +36,9 @@
             <button onclick="checked();" class="btn btn-primary" type="submit">Submit</button>
         </div>
     {{else}}
-        <p class="text-danger">
-            There are no students in this group.
-        </p>
+        <h6 class="text-danger">
+            There are no students in this group
+        </h6>
     {{/if}}
 <div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

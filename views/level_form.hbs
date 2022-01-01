@@ -3,19 +3,19 @@
 </div>
 <form method="POST" action="">
     <div class="mb-3">
-        <label class="form-label" for="Name"><strong>Level name:</strong></label>
+        <label class="form-label" for="Name"><strong>Level name: <span class="text-danger">*</span></strong></label>
         <input id="name" type="text" placeholder="The level name..." name="name" class="form-control" value='{{level.name}}'>
     </div>
     <div class="mb-3">
-        <label class="form-label" for="Total_Days"><strong>Total days:</strong></label>
+        <label class="form-label" for="Total_Days"><strong>Total days: <span class="text-danger">*</span></strong></label>
         <input id="total_days" type="number" placeholder="The total days..." min="1" max="50" name="total_days" class="form-control" value={{level.total_days}}>
     </div>
     <div class="mb-3">
-        <label class="form-label" for="Description"><strong>Description:</strong></label>
+        <label class="form-label" for="Description"><strong>Description: <span class="text-danger">*</span></strong></label>
         <textarea id="description" class="form-control" placeholder="Enter the description..." name="description">{{level.description}}</textarea>
     </div>
     <div>
-        <label class="form-label"><strong>Choose the level type:</strong></label>
+        <label class="form-label"><strong>Choose the level type: <span class="text-danger">*</span></strong></label>
         <select class="form-select" name="type">
             <option value="Basic">Basic</option>
             <option value="Independent">Independent</option>

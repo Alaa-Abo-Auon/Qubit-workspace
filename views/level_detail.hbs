@@ -28,7 +28,7 @@
             </tbody>
         </table>
     {{else}}
-        <p class="text-danger">This level has no groups</p>
+        <h6 class="text-danger">This level has no groups</h6>
     {{/if}}
     <hr>
     <h4>{{title}}</h4>
@@ -45,13 +45,13 @@
         <p>{{level.description}}</p>
     </div>
     <hr>
-    <p>
+    <h6>
         <a href="/admin/group/create">Create Group</a>
-    </p>
-    <p>
+    </h6>
+    <h6>
         <a class="text-success" href="{{level.url}}/update">Update {{level.name}}</a>
-    </p>
-    <p>
+    </h6>
+    <h6>
         <a class="text-danger" href="{{level.url}}/delete">Delete {{level.name}}</a>
-    </p>
+    </h6>
 <div>
