@@ -16,13 +16,13 @@ var GroupSchema = new Schema({
 GroupSchema
   .virtual('short_level_start_date')
   .get(function () {
-    return DateTime.fromJSDate(this.level_start_date).toLocaleString(DateTime.DATE_MED);
+    return DateTime.fromJSDate(this.level_start_date).setLocale('zh').toLocaleString();
   });
 
 GroupSchema
   .virtual('short_level_end_date')
   .get(function () {
-    return DateTime.fromJSDate(this.level_end_date).toLocaleString(DateTime.DATE_MED);
+    return DateTime.fromJSDate(this.level_end_date).setLocale('zh').toLocaleString();
   });
 
 GroupSchema

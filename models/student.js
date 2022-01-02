@@ -27,7 +27,7 @@ StudentSchema
 StudentSchema
   .virtual('due_back_formatted')
   .get(function () {
-    return DateTime.fromJSDate(this.enroll_date).toLocaleString(DateTime.DATE_MED);
+    return DateTime.fromJSDate(this.enroll_date).setLocale('zh').toLocaleString();
   });
 
 module.exports = mongoose.model('Student', StudentSchema)
