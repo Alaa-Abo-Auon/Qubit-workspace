@@ -2,6 +2,9 @@
 body {
   font-family: 'Work Sans', sans-serif;
 }
+h1{
+  color: #130f40;
+}
 a{
   color: #00B7FF;
   text-decoration: none;
