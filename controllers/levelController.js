@@ -148,7 +148,7 @@ exports.level_update_post = [
         else {
             Level.findByIdAndUpdate(req.params.id, level_new, (err, thelevel) => {
                 if (err) { return next(err); }
-                res.redirect('/admin/level/' + thelevel.url)
+                res.redirect('/admin' + thelevel.url)
             })
         }
     }
@@ -187,7 +187,7 @@ exports.level_delete_post = (req, res, next) => {
         } else {
             Level.findByIdAndRemove(req.body.del, (err) => {
                 if (err) { return next(err); }
-                res.redirect('/admin/levels');
+                res.redirect('/admin');
             })
         }
     })
