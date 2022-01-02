@@ -5,10 +5,14 @@ var group_controller = require('../controllers/groupController');
 var student_controller = require('../controllers/studentController');
 
 // GET Home page (detail all of info)
-router.get('/admin', level_controller.level_list);
+router.get('/', (req, res, next) =>{
+    res.redirect('/admin/levels')
+});
 
 /***************************************************************************************/
 /* LEVEL ROUTES */
+// GET Level list
+router.get('/levels', level_controller.level_list);
 
 // GET,POST Create New Level
 router.get('/level/create', level_controller.level_create_get);

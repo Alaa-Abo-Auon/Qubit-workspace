@@ -1,6 +1,20 @@
 <div class="title">
     <h1>{{title}}</h1>
 </div>
+<hr>
+{{#if errors}}
+    <div class="mt-3 mb-3">
+        {{#each errors as |error|}}
+            <span class="text-danger">{{error.msg}}</span>
+            <br>
+        {{/each}}
+    </div>
+{{/if}}
+{{#if err}}
+    <div class="mt-3 mb-3">
+        <span class="text-danger">{{err}}</span>
+    </div>
+{{/if}}
 <form method="POST" action="">
     <div class="mb-3">
         <label class="form-label" for="Name"><strong>Student name: <span class="text-danger">*</span></strong></label>
@@ -64,16 +78,3 @@
         <button class="btn btn-primary" type="submit">Submit</button>
     </div>
 </form>
-{{#if errors}}
-    <div class="mt-3 mb-3">
-        {{#each errors as |error|}}
-            <span class="text-danger">{{error.msg}}</span>
-            <br>
-        {{/each}}
-    </div>
-{{/if}}
-{{#if err}}
-    <div class="mt-3 mb-3">
-        <span class="text-danger">{{err}}</span>
-    </div>
-{{/if}}

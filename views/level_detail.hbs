@@ -1,13 +1,32 @@
 <h1>{{level.name}}</h1>
 <hr>
 <div style="margin-left:20px;margin-top:20px">
+    <div class="btn-toolbar">
+        <a class="btn btn-success" href="{{level.url}}/update">Update {{level.name}}</a>&nbsp;
+        <a class="btn btn-danger" href="{{level.url}}/delete">Delete {{level.name}}</a>&nbsp;
+        <a class="btn btn-primary"  href="/admin/group/create">Create Group</a>&nbsp;
+    </div>
+    <br>
+    <h4>{{title}}</h4>
+    <hr style="width: 18%;">
+    <div class="type">
+        <strong>#Level Type:</strong>
+        <span>{{level.type}}</span>
+    </div>
+    <div class="mt-2 mb-2">
+        <span><strong>#Number of Days:</strong> {{level.total_days}}</span>
+    </div>
+    <div class="description">
+        <strong>#The Description:</strong>
+        <p class="text-break m-3">{{level.description}}</p>
+    </div>
+    <hr>
     <h4>Groups Table</h4>
     {{#if level_groups}}
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th scope="col">Group Name</th>
-                    <th scope="col">Student Number</th>
                     <th scope="col">Current Level</th>
                 </tr>
             </thead>
@@ -16,9 +35,6 @@
                     <tr>
                         <td>
                             <a href='group/{{group.url}}'>{{group.name}}</a>
-                        </td>
-                        <td>
-                            {{count}}
                         </td>
                         <td>
                             {{group.current_level.name}}
@@ -30,28 +46,4 @@
     {{else}}
         <h6 class="text-danger">This level has no groups</h6>
     {{/if}}
-    <hr>
-    <h4>{{title}}</h4>
-    <hr style="width: 18%;">
-    <div class="type">
-        <strong>#Level Type:</strong>
-        <span>{{level.type}}</span>
-    </div>
-    <div class="mt-2 mb-2">
-        <span><strong>#Number of Days:</strong> {{level.total_days}}</span>
-    </div>
-    <div class="description">
-        <strong>#The Description</strong>
-        <p>{{level.description}}</p>
-    </div>
-    <hr>
-    <h6>
-        <a href="/admin/group/create">Create Group</a>
-    </h6>
-    <h6>
-        <a class="text-success" href="{{level.url}}/update">Update {{level.name}}</a>
-    </h6>
-    <h6>
-        <a class="text-danger" href="{{level.url}}/delete">Delete {{level.name}}</a>
-    </h6>
 <div>

@@ -248,6 +248,7 @@ exports.group_update_post = [
                 current_level: req.body.level_choose,
                 lecture_time: lecture_time,
                 status: req.body.status,
+                lecture_attended: req.body.lecture_attended,
                 _id: req.params.id,
             })
 
@@ -339,7 +340,6 @@ exports.group_new_meeting_post = (req, res, next) =>{
     Group.findByIdAndUpdate(req.params.id, { $inc: { lecture_attended: 1 }}).exec((err) =>{
         if (err) { return next(err); }
     })
-    
 }
 
 /***************************************************************************************/

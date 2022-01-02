@@ -2,14 +2,14 @@
 <hr>
 <div style="margin-left:20px;margin-top:20px">
     <div class="btn-toolbar">
+        <a class="btn btn-success" href='{{group.url}}/update'>Update {{group.name}}</a> &nbsp;
+        <a class="btn btn-danger" href='{{group.url}}/delete'>Delete {{group.name}}</a>&nbsp;
         {{#if next_level}}
             <form method="POST" action="">
                 <input id="next_level" type="hidden" name="next_level" value="{{next_level._id}}">
                 <button class="btn btn-primary" type="submit">Next level</button>
-            </form>&nbsp;
+            </form>
         {{/if}}
-        <a class="btn btn-success" href='{{group.url}}/update'>Update {{group.name}}</a> &nbsp;
-        <a class="btn btn-danger" href='{{group.url}}/delete'>Delete {{group.name}}</a>
     </div>
     <br>
     <h4>{{title}}</h4>
@@ -82,7 +82,6 @@
                         <td>
                             {{student.due_back_formatted}}
                         </td>
-                        {{!-- <td>GET this students absent objects with filter (user = current_user and level = current_level)</td> --}}
                     </tr>
                 {{/each}}
             </tbody>

@@ -32,7 +32,7 @@ exports.level_list = (req, res, next) => {
         .exec(function (err, results) {
             if (err) { return next(err); }
             //Successful, so render
-            res.render('level_list', { title: 'Home', level_list: results });
+            res.render('level_list', { title: 'All Level', level_list: results });
         });
 }
 
@@ -148,7 +148,7 @@ exports.level_update_post = [
         else {
             Level.findByIdAndUpdate(req.params.id, level_new, (err, thelevel) => {
                 if (err) { return next(err); }
-                res.redirect('/admin' + thelevel.url)
+                res.redirect('/admin/level/' + thelevel.url)
             })
         }
     }
@@ -187,7 +187,7 @@ exports.level_delete_post = (req, res, next) => {
         } else {
             Level.findByIdAndRemove(req.body.del, (err) => {
                 if (err) { return next(err); }
-                res.redirect('/admin');
+                res.redirect('/admin/levels');
             })
         }
     })
