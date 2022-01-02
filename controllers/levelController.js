@@ -32,7 +32,7 @@ exports.level_list = (req, res, next) => {
         .exec(function (err, results) {
             if (err) { return next(err); }
             //Successful, so render
-            res.render('level_list', { title: 'All Level', level_list: results });
+            res.render('level_list', { title: 'Home', level_list: results });
         });
 }
 

@@ -1,12 +1,19 @@
 <h1>{{title}}</h1>
+<hr>
 {{#if level_list}}
-    <ol>
+    <div class="ul">
         {{#each level_list as |level|}}
-            <li>
-                <a href='level/{{level.url}}'>{{level.name}}</a>
-            </li>
+        <div class='card'>
+            <a class="box" href='level/{{level.url}}'>{{level.name}}</a>
+            <div class='card-body'>
+                <p class="card-text">
+                    {{level.description}}
+                </p>
+            </div>
+        </div>
         {{/each}}
-    </ol>
+        <div class="clear-fix"></div>
+    </div>
 {{else}}
     <h6 class="text-danger">
         There are no levels

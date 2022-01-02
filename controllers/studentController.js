@@ -10,13 +10,21 @@ const absent = require('../models/absent');
 
 // Student List 
 exports.student_list = (req, res, next) => {
-    Student.find()
-        .sort([['name', 'ascending']])
-        .exec(function (err, results) {
-            if (err) { return next(err); }
+    async.parallel({
+        student:(cb) => {
+            Student.find()
+            .populate({
+                path: 'group',
+                populate: {path : 'current_level'}
+            })
+                .sort([['name', 'ascending']])
+                .exec(cb)
+        }
+    },(err,result)=>{
+        if (err) { return next(err); }
             //Successful, so render
-            res.render('student_list', { title: 'All Students', student_list: results });
-        });
+            res.render('student_list', { title: 'All Students', student_list: result.student });
+    })
 }
 
 /***************************************************************************************/

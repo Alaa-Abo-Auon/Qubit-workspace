@@ -1,6 +1,17 @@
 <h1>{{group.name}}</h1>
 <hr>
 <div style="margin-left:20px;margin-top:20px">
+    <div class="btn-toolbar">
+        {{#if next_level}}
+            <form method="POST" action="">
+                <input id="next_level" type="hidden" name="next_level" value="{{next_level._id}}">
+                <button class="btn btn-primary" type="submit">Next level</button>
+            </form>&nbsp;
+        {{/if}}
+        <a class="btn btn-success" href='{{group.url}}/update'>Update {{group.name}}</a> &nbsp;
+        <a class="btn btn-danger" href='{{group.url}}/delete'>Delete {{group.name}}</a>
+    </div>
+    <br>
     <h4>{{title}}</h4>
     <hr style="width: 18%;">
     <h6><strong>The current level is: </strong>{{group.current_level.name}}</h6>
@@ -82,18 +93,5 @@
         </h6>
     {{/if}}
     <hr>
-    {{#if next_level}}
-        <form method="POST" action="">
-            <input id="next_level" type="hidden" name="next_level" value="{{next_level._id}}">
-            <button class="btn btn-primary" type="submit">Next level</button>
-        </form>
-        <br>
-    {{/if}}
-    <h6>
-        <a class="text-success" href='{{group.url}}/update'>Update {{group.name}}</a>
-    </h6>
-    <h6>
-        <a class="text-danger" href='{{group.url}}/delete'>Delete {{group.name}}</a>
-    </h6>
     <br>
 <div>

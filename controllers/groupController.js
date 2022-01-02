@@ -331,14 +331,14 @@ exports.group_new_meeting_post = (req, res, next) =>{
             }
             
         }
-        Group.findByIdAndUpdate(req.params.id, { $inc: { lecture_attended: 1 }}).exec((err) =>{
-            if (err) { return next(err); }
-        })
         res.redirect('/admin/level/group/' + req.params.id)
     }
     else{
         res.redirect('/admin/level/group/' + req.params.id)
     }
+    Group.findByIdAndUpdate(req.params.id, { $inc: { lecture_attended: 1 }}).exec((err) =>{
+        if (err) { return next(err); }
+    })
     
 }
 

@@ -1,18 +1,41 @@
 <h1>{{title}}</h1>
+<hr>
 {{#if student_list}}
-    <ol>
-        {{#each student_list as |student|}}
-            <li>
-                <a href="level/group/student/{{student.url}}">{{student.name}}</a>
-            </li>
-        {{/each}}
-    </ol>
-    <hr>
     <div>
-        <h6><a href='/admin/student/create'>Create Student</a></h6>
+        <h6><a class="btn btn-primary" href='/admin/student/create'>Create Student</a></h6>
     </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Student Name</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Current Group</th>
+                <th scope="col">Current Level</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each student_list as |student|}}
+                <tr>
+                    <td>
+                        <a href="level/group/student/{{student.url}}">{{student.name}}</a>
+                    </td>
+                    <td>
+                        {{student.phone_number}}
+                    </td>
+                    <td>
+                        <a href="level/group/{{student.group.url}}">{{student.group.name}}</a>
+                    </td>
+                    <td>
+                        <a href="level/{{student.group.current_level.url}}">{{student.group.current_level.name}}</a>
+                        
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <hr>
 {{else}}
     <h6 class="text-danger">
-        There are no students
+        There are no absent students
     </h6>
 {{/if}}

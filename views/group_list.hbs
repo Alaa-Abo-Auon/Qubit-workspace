@@ -1,12 +1,18 @@
 <h1>{{title}}</h1>
+<hr>
 {{#if group_list}}
-    <ol>
+    <div class="ul">
         {{#each group_list as |group|}}
-            <li>
-                <a href="level/group/{{group.url}}">{{group.name}}</a>
-            </li>
+        <div class='card'>
+            <a class="box" href="level/group/{{group.url}}">{{group.name}}</a>
+            <div class='card-body'>
+                <p class="card-text">
+                    {{group.status}}
+                </p>
+            </div>
+        </div>
         {{/each}}
-    </ol>
+    </div>
 {{else}}
     <h6 class="text-danger">
         There are no groups

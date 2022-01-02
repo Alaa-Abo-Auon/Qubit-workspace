@@ -1,19 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@600&display=swap');
 body {
-  font: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: 'Work Sans', sans-serif;
 }
-
-a {
+a{
   color: #00B7FF;
   text-decoration: none;
 }
-
 li{
   padding: 10px;
   font-size: 18px;
+  list-style: none;
 }
-
 .sidebar-nav {
   margin-top: 20px;
   padding: 0;
   list-style: none;
+}
+.ul{
+  text-align: center;
+}
+.box{
+  text-align: left;
+  font-size: 35px;
+  background-color: #f0932b;
+  line-height: 60px;
+  width: 100%;
+  height: 80px;
+  color: #fff;
+  border-radius: 5px 5px 0 0;
+  padding-left: 10px;
+}
+.box:hover{
+  transition: 1s;
+  color: #fff;
+  background-color: #130f40;
+}
+.card{
+  text-align: left;
+  width: 32%;
+  float: left;
+  margin: 0.2%;
+  border-radius: 5px
+}
+.card-title{
+  border-bottom: solid 1px black ;
+}
+.clear-fix{
+  clear: both;
+}
+.card-body{
+  background-color: #130f40;
+  color: #fff;
+  border-radius: 0 0 5px 5px;
 }
