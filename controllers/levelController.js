@@ -129,6 +129,7 @@ exports.level_update_post = [
                 name: req.body.name,
                 total_days: req.body.total_days,
                 description: req.body.description,
+                type: req.body.type,
                 _id: req.params.id,
             }
         );
