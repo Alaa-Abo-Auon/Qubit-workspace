@@ -1,9 +1,9 @@
 <h1>{{title}}</h1>
 <hr>
+<a class="btn btn-primary" href='/admin/student/create'>Create Student</a>
+<br>
+<br>
 {{#if student_list}}
-    <div>
-        <h6><a class="btn btn-primary" href='/admin/student/create'>Create Student</a></h6>
-    </div>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -33,7 +33,6 @@
             {{/each}}
         </tbody>
     </table>
-    <hr>
 {{else}}
     <h6 class="text-danger">
         There are no students

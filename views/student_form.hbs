@@ -32,7 +32,7 @@
         {{#if levels}}
             <label class="form-label"><strong>Choose the level: <span class="text-danger">*</span></strong></label>
             <div class="mb-3">
-                <select class="form-select" name="level_choose">
+                <select id="level_choose" class="form-select" name="level_choose">
                     {{#each levels as |level|}}
                         <option value={{level._id}}>{{level.name}}</option>
                     {{/each}}
@@ -49,9 +49,10 @@
     </div>
     <div>
         {{#if groups}}
+            <div style="display: none;" id="type5">{{student.group}}</div>
             <label class="form-label"><strong>Choose the group: <span class="text-danger">*</span></strong></label>
             <div class="mb-3">
-                <select class="form-select" name="group_choose">
+                <select id="group_choose" class="form-select" name="group_choose">
                     {{#each groups as |group|}}
                         <option value={{group._id}}>{{group.name}}</option>
                     {{/each}}
@@ -65,6 +66,7 @@
         {{/if}}
     </div>
     <div class="mb-3">
+        <div style="display: none;" id="type6">{{student.status}}</div>
         <label class="form-label"><strong>Status: <span class="text-danger">*</span></strong></label>
         <select id="status" class="form-select" name="status">
             <option value="Active">Active</option>
@@ -74,6 +76,18 @@
             <option value="Warned">Warned</option>
         </select>
     </div>
+    <script>
+        window.onload = function(){
+            selecty = document.getElementById('type5').innerHTML
+            if(selecty){
+                document.getElementById('group_choose').value = selecty
+            }
+            selectz = document.getElementById('type6').innerHTML
+            if(selectz){
+                document.getElementById('status').value = selectz
+            }
+        }
+    </script>
     <div class="mt-3 mb-3">
         <button class="btn btn-primary" type="submit">Submit</button>
     </div>

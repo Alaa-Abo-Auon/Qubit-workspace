@@ -23,13 +23,22 @@
         <label class="form-label" for="Description"><strong>Description: <span class="text-danger">*</span></strong></label>
         <textarea id="description" class="form-control" placeholder="Enter the description..." name="description">{{level.description}}</textarea>
     </div>
+    <div style="display: none;" id="type1">{{level.type}}</div>
     <div>
         <label class="form-label"><strong>Choose the level type: <span class="text-danger">*</span></strong></label>
-        <select class="form-select" name="type">
+        <select class="form-select" id='type' name="type">
             <option value="Basic">Basic</option>
             <option value="Independent">Independent</option>
         </select>
     </div>
+    <script>
+        window.onload = function(){
+            selectx = document.getElementById('type1').innerText
+            if(selectx){
+                document.getElementById('type').value = selectx
+            }
+        }
+    </script>
     <br>
     <button class="btn btn-primary" type="submit">Submit</button>
 </form>

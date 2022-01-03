@@ -30,10 +30,11 @@
         <input id="level_end_date" min="2020-01-01" type="date" name="level_end_date" class="form-control">
     </div>
     <div>
+        <div style="display: none;" id="type2">{{group.current_level}}</div>
         {{#if levels}}
             <div  class="mb-3 mt-2">
                 <label class="form-label"><strong>Choose the level: <span class="text-danger">*</span></strong></label>
-                <select class="form-select" name="level_choose">
+                <select id="level_choose" class="form-select" name="level_choose">
                     {{#each levels as |level|}}
                         <option value={{level._id}}>{{level.name}}</option>
                     {{/each}}
@@ -46,6 +47,7 @@
             </span>
         {{/if}}
     </div>
+    <div style="display: none;" id="type3">{{group.status}}</div>
     <div class="mb-3">
         <label class="form-label"><strong>Status: <span class="text-danger">*</span></strong></label>
         <select id="status" class="form-select" name="status">
@@ -54,6 +56,18 @@
             <option value="Suspended">Suspended</option>
         </select>
     </div>
+    <script>
+        window.onload = function(){
+            selectx = document.getElementById('type3').innerText
+            if(selectx){
+                document.getElementById('status').value = selectx
+            }
+            selecty = document.getElementById('type2').innerHTML
+            if(selecty){
+                document.getElementById('level_choose').value = selecty
+            }
+        }
+    </script>
     <div class="input-group mb-3">
             <label class="form-label"><strong>Times:</strong></label>
         <div class="input-group mb-3">
