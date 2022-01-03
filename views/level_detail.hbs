@@ -18,7 +18,12 @@
     </div>
     <div class="description">
         <strong>#The Description:</strong>
-        <p class="text-break m-3">{{level.description}}</p>
+        <p id="de" class="text-break m-3">{{level.description}}</p>
+        <script>
+            var string = document.getElementById('de').innerText
+            let result = string.replace(/&#x2F;/g, '/');
+            document.getElementById("de").innerText = result
+        </script>
     </div>
     <hr>
     <h4>Groups Table</h4>

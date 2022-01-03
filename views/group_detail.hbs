@@ -4,6 +4,7 @@
     <div class="btn-toolbar">
         <a class="btn btn-success" href='{{group.url}}/update'>Update {{group.name}}</a> &nbsp;
         <a class="btn btn-danger" href='{{group.url}}/delete'>Delete {{group.name}}</a>&nbsp;
+        <a class="btn btn-secondary" href="/admin/level/group/{{group._id}}/new_meeting">New meeting</a>&nbsp;
         {{#if next_level}}
             <form method="POST" action="">
                 <input id="next_level" type="hidden" name="next_level" value="{{next_level._id}}">
@@ -19,9 +20,6 @@
     <h6><strong>The group should end the level in: </strong>{{group.short_level_end_date}}</h6>
     <h6><strong>Status: </strong>{{group.status}}</h6>
     <h6><strong>Lecture attended: </strong>{{group.lecture_attended}}</h6>
-    <h6>
-        <a href="/admin/level/group/{{group._id}}/new_meeting">New meeting</a>
-    </h6>
     <hr>
     <h4>Meeting Time</h4>
     <hr style="width: 18%;">

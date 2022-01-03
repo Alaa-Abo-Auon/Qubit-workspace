@@ -7,12 +7,17 @@ const async = require('async');
 
 // Group List 
 exports.group_list = (req, res, next) => {
-    Group.find()
-        .sort([['name', 'ascending']])
-        .exec(function (err, results) {
-            if (err) { return next(err); }
-            res.render('group_list', { title: 'All Groups', group_list: results });
-        });
+    async.parallel({
+        group: (cb) =>{
+            Group.find()
+            .populate('current_level')
+            .sort([['name', 'ascending']])
+            .exec(cb)
+        }
+    }, (err, result) =>{
+        if (err) { return next(err); }
+        res.render('group_list', { title: 'All Groups', group_list: result.group });
+    })
 }
 
 /***************************************************************************************/
