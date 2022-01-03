@@ -51,12 +51,12 @@ exports.student_create_get = (req, res, next) => {
 // POST Create New Student
 exports.student_create_post = [
 
-    body('name').trim().isLength({ min: 1 }).escape().withMessage('Student name is required.'),
-    body('phone_number').trim().isLength({ min: 1 }).escape().withMessage('Student phone number is required.'),
-    body('group_choose').trim().isLength({ min: 1 }).escape().withMessage('Choose the group is required.'),
-    body('level_choose').trim().isLength({ min: 1 }).escape().withMessage('Choose the group is required.'),
-    body('enroll_date').trim().isLength({ min: 1 }).escape().withMessage('Enroll date is required.'),
-    body('status').trim().isLength({ min: 1 }).escape().withMessage('Choose the status is required.'),
+    body('name').trim().isLength({ min: 1 }).withMessage('Student name is required.'),
+    body('phone_number').trim().isLength({ min: 1 }).withMessage('Student phone number is required.'),
+    body('group_choose').trim().isLength({ min: 1 }).withMessage('Choose the group is required.'),
+    body('level_choose').trim().isLength({ min: 1 }).withMessage('Choose the group is required.'),
+    body('enroll_date').trim().isLength({ min: 1 }).withMessage('Enroll date is required.'),
+    body('status').trim().isLength({ min: 1 }).withMessage('Choose the status is required.'),
 
     (req, res, next) => {
 
@@ -226,10 +226,10 @@ exports.student_update_get = (req, res, next) => {
 // POST Student Update
 exports.student_update_post = [
 
-    body('name').trim().isLength({ min: 1 }).escape().withMessage('Student name is required.'),
-    body('phone_number').trim().isLength({ min: 1 }).escape().withMessage('Student phone number is required.'),
-    body('group_choose').trim().isLength({ min: 1 }).escape().withMessage('Choose the group is required.'),
-    body('status').trim().isLength({ min: 1 }).escape().withMessage('Choose the status is required.'),
+    body('name').trim().isLength({ min: 1 }).withMessage('Student name is required.'),
+    body('phone_number').trim().isLength({ min: 1 }).withMessage('Student phone number is required.'),
+    body('group_choose').trim().isLength({ min: 1 }).withMessage('Choose the group is required.'),
+    body('status').trim().isLength({ min: 1 }).withMessage('Choose the status is required.'),
 
     (req, res, next) => {
 

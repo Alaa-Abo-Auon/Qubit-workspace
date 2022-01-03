@@ -16,7 +16,8 @@
     "luxon": "^2.2.0",
     "mongoose": "^6.1.2",
     "morgan": "~1.9.1",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "utf8": "^3.0.0"
   },
   "description": "*main branch*",
   "main": "app.js",
