@@ -4,9 +4,9 @@ var Schema = mongoose.Schema;
 
 
 var StudentSchema = new Schema({
+  name: { type: String, required: true, maxLength: 100 },
   current_level: { type: Schema.Types.ObjectId, ref: 'Level' },
   group: { type: Schema.Types.ObjectId, ref: 'Group' },
-  name: { type: String, required: true, maxLength: 100 },
   phone_number: { type: String, required: true },
   enroll_date: { type: Date },
   status: { type: String },
