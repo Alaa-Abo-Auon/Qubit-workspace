@@ -117,7 +117,7 @@ exports.level_update_post = [
     
     body('name').trim().isLength({ min: 1 }).withMessage('Level name must not be empty.'),
     body('total_days').trim().isLength({ min: 1 }).withMessage('Total days must not be empty.'),
-    body('description').trim().isLength({ min: 1 }).withMessage('description must not be empty.'),
+    body('description').trim().isLength({ min: 1 }).withMessage('Description must not be empty.'),
 
     (req, res, next) => {
         const utf8 = require('utf8');

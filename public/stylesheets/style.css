@@ -31,6 +31,7 @@ li{
   color: #fff;
   border-radius: 5px 5px 0 0;
   padding-left: 10px;
+  transition: 1s;
 }
 .box:hover{
   transition: 1s;
