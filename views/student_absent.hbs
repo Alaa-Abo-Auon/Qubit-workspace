@@ -1,6 +1,6 @@
 <h1>{{title}}</h1>
 <hr>
-<div style="margin-left:20px;margin-top:20px">
+<div>
     {{#if students}}
         <h4>Absent Table</h4>
         <table class="table table-striped">
@@ -28,25 +28,37 @@
                         {{student.phone_number}}
                     </td>
                     <td>
-                        {{student.group.name}}
+                        <a href="/admin/level/group/{{student.group._id}}">{{student.group.name}}</a>
                     </td>
                     <td>
-                        {{student.level1}}
+                        {{#if student.level1}}
+                            {{student.level1}}
+                        {{/if}}
                     </td>
                     <td>
-                        {{student.level2}}
+                        {{#if student.level2}}
+                            {{student.level2}}
+                        {{/if}}
                     </td>
                     <td>
-                        {{student.level3}}
+                        {{#if student.level3}}
+                            {{student.level3}}
+                        {{/if}}
                     </td>
                     <td>
-                        {{student.level4}}
+                        {{#if student.level4}}
+                            {{student.level4}}
+                        {{/if}}
                     </td>
                     <td>
-                        {{student.level5}}
+                        {{#if student.level5}}
+                            {{student.level5}}
+                        {{/if}}
                     </td>
                     <td>
-                        {{student.level6}}
+                        {{#if student.level6}}
+                            {{student.level6}}
+                        {{/if}}
                     </td>
                     <td>
                         {{ student.abs }}
