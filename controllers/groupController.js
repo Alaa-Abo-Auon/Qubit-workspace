@@ -354,3 +354,16 @@ exports.group_new_meeting_post = (req, res, next) => {
 }
 
 /***************************************************************************************/
+
+// calendar
+exports.calendar = (req, res, next) =>{
+    async.parallel({
+        group: (cb) =>{
+            Group.find({})
+            .exec(cb)
+        }
+    },(err ,result) =>{
+        if(err) { return next(err); }
+        res.render('calendar')
+    })
+}
