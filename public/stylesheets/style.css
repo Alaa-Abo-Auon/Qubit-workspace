@@ -55,6 +55,13 @@ li{
   color: #fff;
   border-radius: 0 0 5px 5px;
 }
-.head{
-  border-bottom: solid 1px ;
+.free{
+  color:rgb(0, 78, 0);
+  background-color: rgb(143, 255, 143);
+}
+.not_free{
+  color:rgb(103, 0, 0);
+  background-color: rgb(255, 112, 112) ;
+  border-radius: 5px;
+  padding: 3px;
 }
