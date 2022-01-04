@@ -8,13 +8,13 @@ const async = require('async');
 // Group List 
 exports.group_list = (req, res, next) => {
     async.parallel({
-        group: (cb) =>{
+        group: (cb) => {
             Group.find()
-            .populate('current_level')
-            .sort([['name', 'ascending']])
-            .exec(cb)
+                .populate('current_level')
+                .sort([['name', 'ascending']])
+                .exec(cb)
         }
-    }, (err, result) =>{
+    }, (err, result) => {
         if (err) { return next(err); }
         res.render('group_list', { title: 'All Groups', group_list: result.group });
     })
@@ -351,6 +351,176 @@ exports.group_new_meeting_post = (req, res, next) => {
     Group.findByIdAndUpdate(req.params.id, { $inc: { lecture_attended: 1 } }).exec((err) => {
         if (err) { return next(err); }
     })
+}
+
+/***************************************************************************************/
+
+exports.calender_get = (req, res, next) => {
+
+    async.parallel({
+        groups: (cb) => {
+            Group.find({})
+                .exec(cb)
+        }
+    }, (err, result) => {
+        if (err) { return next(err); }
+        var saturday = []
+        var sunday = []
+        var monday = []
+        var tuesday = []
+        var wednesday = []
+        var thursday = []
+        for (var group of result.groups) {
+            for (var time of group.lecture_time) {
+                if (time.saturday) {
+                    var check = time.saturday.match(/\d*/);
+                    switch (check[0]) {
+                        case '1':
+                            check = '13'
+                            saturday.push(check + group.name)
+                            break
+                        case '2':
+                            check = '14'
+                            saturday.push(check + group.name)
+                            break
+                        case '3':
+                            check = '15'
+                            saturday.push(check + group.name)
+                            break
+                        case '4':
+                            check = '16'
+                            saturday.push(check + group.name)
+                            break
+                        default:
+                            saturday.push(check + group.name)
+                    }
+                }
+                if (time.sunday) {
+                    var check = time.sunday.match(/\d*/);
+                    switch (check[0]) {
+                        case '1':
+                            check = '13'
+                            sunday.push(check + group.name)
+                            break
+                        case '2':
+                            check = '14'
+                            sunday.push(check + group.name)
+                            break
+                        case '3':
+                            check = '15'
+                            sunday.push(check + group.name)
+                            break
+                        case '4':
+                            check = '16'
+                            sunday.push(check + group.name)
+                            break
+                        default:
+                            sunday.push(check + group.name)
+                    }
+                }
+                if (time.monday) {
+                    var check = time.monday.match(/\d*/);
+                    switch (check[0]) {
+                        case '1':
+                            check = '13'
+                            monday.push(check + group.name)
+                            break
+                        case '2':
+                            check = '14'
+                            monday.push(check + group.name)
+                            break
+                        case '3':
+                            check = '15'
+                            monday.push(check + group.name)
+                            break
+                        case '4':
+                            check = '16'
+                            monday.push(check + group.name)
+                            break
+                        default:
+                            monday.push(check + group.name)
+                    }
+                }
+                if (time.tuesday) {
+                    var check = time.tuesday.match(/\d*/);
+                    switch (check[0]) {
+                        case '1':
+                            check = '13'
+                            tuesday.push(check + group.name)
+                            break
+                        case '2':
+                            check = '14'
+                            tuesday.push(check + group.name)
+                            break
+                        case '3':
+                            check = '15'
+                            tuesday.push(check + group.name)
+                            break
+                        case '4':
+                            check = '16'
+                            tuesday.push(check + group.name)
+                            break
+                        default:
+                            tuesday.push(check + group.name)
+                    }
+                }
+                if (time.wednesday) {
+                    var check = time.wednesday.match(/\d*/);
+                    switch (check[0]) {
+                        case '1':
+                            check = '13'
+                            wednesday.push(check + group.name)
+                            break
+                        case '2':
+                            check = '14'
+                            wednesday.push(check + group.name)
+                            break
+                        case '3':
+                            check = '15'
+                            wednesday.push(check + group.name)
+                            break
+                        case '4':
+                            check = '16'
+                            wednesday.push(check + group.name)
+                            break
+                        default:
+                            wednesday.push(check + group.name)
+                    }
+                }
+                if (time.thursday) {
+                    var check = time.thursday.match(/\d*/);
+                    switch (check[0]) {
+                        case '1':
+                            check = '13'
+                            thursday.push(check + group.name)
+                            break
+                        case '2':
+                            check = '14'
+                            thursday.push(check + group.name)
+                            break
+                        case '3':
+                            check = '15'
+                            thursday.push(check + group.name)
+                            break
+                        case '4':
+                            check = '16'
+                            thursday.push(check + group.name)
+                            break
+                        default:
+                            thursday.push(check + group.name)
+                    }
+                }
+            }
+        }
+        saturday.sort()
+        sunday.sort()
+        monday.sort()
+        tuesday.sort()
+        wednesday.sort()
+        thursday.sort()
+        res.send('sat ' + saturday + 'sun ' + sunday + 'mon ' + monday + 'tues ' + tuesday + 'wednes ' + wednesday + 'thurs ' + thursday)
+    })
+
 }
 
 /***************************************************************************************/
