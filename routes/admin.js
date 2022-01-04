@@ -58,7 +58,7 @@ router.post('/level/group/:id/new_meeting', group_controller.group_new_meeting_p
 router.post('/level/group/:id', group_controller.next_level_post);
 
 // Calender 
-router.get('/calender', group_controller.calender);
+router.get('/calendar', group_controller.calendar);
 
 /***************************************************************************************/
 /* STUDENT ROUTES */

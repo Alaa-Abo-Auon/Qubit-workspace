@@ -355,7 +355,7 @@ exports.group_new_meeting_post = (req, res, next) => {
 
 /***************************************************************************************/
 
-exports.calender = (req, res, next) => {
+exports.calendar = (req, res, next) => {
 
     async.parallel({
         groups: (cb) => {
@@ -364,163 +364,188 @@ exports.calender = (req, res, next) => {
         }
     }, (err, result) => {
         if (err) { return next(err); }
-        var saturday = []
-        var sunday = []
-        var monday = []
-        var tuesday = []
-        var wednesday = []
-        var thursday = []
+        var time = {}
         for (var group of result.groups) {
-            for (var time of group.lecture_time) {
-                if (time.saturday) {
-                    var check = time.saturday.match(/\d*/);
+            for (var t of group.lecture_time) {
+                if (t.saturday) {
+                    var check = t.saturday.match(/\d*/);
                     switch (check[0]) {
                         case '1':
-                            check = '13'
-                            saturday.push(check + group.name)
+                            time.sat1 = group.name
                             break
                         case '2':
-                            check = '14'
-                            saturday.push(check + group.name)
+                            time.sat2 = group.name
                             break
                         case '3':
-                            check = '15'
-                            saturday.push(check + group.name)
+                            time.sat3 = group.name
                             break
                         case '4':
-                            check = '16'
-                            saturday.push(check + group.name)
+                            time.sat4 = group.name
                             break
-                        default:
-                            saturday.push(check + group.name)
+                        case '9':
+                            time.sat9 = group.name
+                            break
+                        case '10':
+                            time.sat10 = group.name
+                            break
+                        case '11':
+                            time.sat11 = group.name
+                            break
+                        case '12':
+                            time.sat12 = group.name
+                            break
                     }
                 }
-                if (time.sunday) {
-                    var check = time.sunday.match(/\d*/);
+                if (t.sunday) {
+                    var check = t.sunday.match(/\d*/);
                     switch (check[0]) {
                         case '1':
-                            check = '13'
-                            sunday.push(check + group.name)
+                            time.sun1 = group.name
                             break
                         case '2':
-                            check = '14'
-                            sunday.push(check + group.name)
+                            time.sun2 = group.name
                             break
                         case '3':
-                            check = '15'
-                            sunday.push(check + group.name)
+                            time.sun3 = group.name
                             break
                         case '4':
-                            check = '16'
-                            sunday.push(check + group.name)
+                            time.sun4 = group.name
                             break
-                        default:
-                            sunday.push(check + group.name)
+                        case '9':
+                            time.sun9 = group.name
+                            break
+                        case '10':
+                            time.sun10 = group.name
+                            break
+                        case '11':
+                            time.sun11 = group.name
+                            break
+                        case '12':
+                            time.sun12 = group.name
+                            break
                     }
                 }
-                if (time.monday) {
-                    var check = time.monday.match(/\d*/);
+                if (t.monday) {
+                    var check = t.monday.match(/\d*/);
                     switch (check[0]) {
                         case '1':
-                            check = '13'
-                            monday.push(check + group.name)
+                            time.mon1 = group.name
                             break
                         case '2':
-                            check = '14'
-                            monday.push(check + group.name)
+                            time.mon2 = group.name
                             break
                         case '3':
-                            check = '15'
-                            monday.push(check + group.name)
+                            time.mon3 = group.name
                             break
                         case '4':
-                            check = '16'
-                            monday.push(check + group.name)
+                            time.mon4 = group.name
                             break
-                        default:
-                            monday.push(check + group.name)
+                        case '9':
+                            time.mon9 = group.name
+                            break
+                        case '10':
+                            time.mon10 = group.name
+                            break
+                        case '11':
+                            time.mon11 = group.name
+                            break
+                        case '12':
+                            time.mon12 = group.name
+                            break
                     }
                 }
-                if (time.tuesday) {
-                    var check = time.tuesday.match(/\d*/);
+                if (t.tuesday) {
+                    var check = t.tuesday.match(/\d*/);
                     switch (check[0]) {
                         case '1':
-                            check = '13'
-                            tuesday.push(check + group.name)
+                            time.tue1 = group.name
                             break
                         case '2':
-                            check = '14'
-                            tuesday.push(check + group.name)
+                            time.tue2 = group.name
                             break
                         case '3':
-                            check = '15'
-                            tuesday.push(check + group.name)
+                            time.tue3 = group.name
                             break
                         case '4':
-                            check = '16'
-                            tuesday.push(check + group.name)
+                            time.tue4 = group.name
                             break
-                        default:
-                            tuesday.push(check + group.name)
+                        case '9':
+                            time.tue9 = group.name
+                            break
+                        case '10':
+                            time.tue10 = group.name
+                            break
+                        case '11':
+                            time.tue11 = group.name
+                            break
+                        case '12':
+                            time.tue12 = group.name
+                            break
                     }
                 }
-                if (time.wednesday) {
-                    var check = time.wednesday.match(/\d*/);
+                if (t.wednesday) {
+                    var check = t.wednesday.match(/\d*/);
                     switch (check[0]) {
                         case '1':
-                            check = '13'
-                            wednesday.push(check + group.name)
+                            time.wed1 = group.name
                             break
                         case '2':
-                            check = '14'
-                            wednesday.push(check + group.name)
+                            time.wed2 = group.name
                             break
                         case '3':
-                            check = '15'
-                            wednesday.push(check + group.name)
+                            time.wed3 = group.name
                             break
                         case '4':
-                            check = '16'
-                            wednesday.push(check + group.name)
+                            time.wed4 = group.name
                             break
-                        default:
-                            wednesday.push(check + group.name)
+                        case '9':
+                            time.wed9 = group.name
+                            break
+                        case '10':
+                            time.wed10 = group.name
+                            break
+                        case '11':
+                            time.wed11 = group.name
+                            break
+                        case '12':
+                            time.wed12 = group.name
+                            break
                     }
                 }
-                if (time.thursday) {
-                    var check = time.thursday.match(/\d*/);
+                if (t.thursday) {
+                    var check = t.thursday.match(/\d*/);
                     switch (check[0]) {
                         case '1':
-                            check = '13'
-                            thursday.push(check + group.name)
+                            time.thu1 = group.name
                             break
                         case '2':
-                            check = '14'
-                            thursday.push(check + group.name)
+                            time.thu2 = group.name
                             break
                         case '3':
-                            check = '15'
-                            thursday.push(check + group.name)
+                            time.thu3 = group.name
                             break
                         case '4':
-                            check = '16'
-                            thursday.push(check + group.name)
+                            time.thu4 = group.name
                             break
-                        default:
-                            thursday.push(check + group.name)
+                        case '9':
+                            time.thu9 = group.name
+                            break
+                        case '10':
+                            time.thu10 = group.name
+                            break
+                        case '11':
+                            time.thu11 = group.name
+                            break
+                        case '12':
+                            time.thu12 = group.name
+                            break
                     }
                 }
             }
         }
-        saturday.sort()
-        sunday.sort()
-        monday.sort()
-        tuesday.sort()
-        wednesday.sort()
-        thursday.sort()
-        res.render('calender', { saturday: saturday, sunday: sunday, monday: monday, tuesday: tuesday, wednesday: wednesday, thursday: thursday })
+        console.log(time);
+        res.render('calendar', { time: time })
     })
-
 }
 
 /***************************************************************************************/
