@@ -543,7 +543,6 @@ exports.calendar = (req, res, next) => {
                 }
             }
         }
-        console.log(time);
         res.render('calendar', { time: time })
     })
 }
