@@ -355,8 +355,7 @@ exports.group_new_meeting_post = (req, res, next) => {
 
 /***************************************************************************************/
 
-<<<<<<< HEAD
-exports.calender_get = (req, res, next) => {
+exports.calender = (req, res, next) => {
 
     async.parallel({
         groups: (cb) => {
@@ -519,16 +518,9 @@ exports.calender_get = (req, res, next) => {
         tuesday.sort()
         wednesday.sort()
         thursday.sort()
-        res.send('sat ' + saturday + 'sun ' + sunday + 'mon ' + monday + 'tues ' + tuesday + 'wednes ' + wednesday + 'thurs ' + thursday)
+        res.render('calender', { saturday: saturday, sunday: sunday, monday: monday, tuesday: tuesday, wednesday: wednesday, thursday: thursday })
     })
 
 }
 
 /***************************************************************************************/
-=======
-// calendar
-exports.calendar = (req, res, next) =>{
-
-
-}
->>>>>>> main
