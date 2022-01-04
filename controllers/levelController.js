@@ -68,14 +68,13 @@ exports.level_create_get = (req, res, next) => {
 exports.level_create_post = [
 
     
-    body('name').trim().isLength({ min: 1 }).escape().withMessage('Level name is required.'),
-    body('total_days').trim().isLength({ min: 1 }).escape().withMessage('Total days is required.'),
-    body('description').trim().isLength({ min: 1 }).escape().withMessage('Description is required.'),
-    body('type').trim().isLength({ min: 1 }).escape().withMessage('Level type is required.'),
+    body('name').trim().isLength({ min: 1 }).withMessage('Level name is required.'),
+    body('total_days').trim().isLength({ min: 1 }).withMessage('Total days is required.'),
+    body('description').trim().isLength({ min: 1 }).withMessage('Description is required.'),
+    body('type').trim().isLength({ min: 1 }).withMessage('Level type is required.'),
 
     
     (req, res, next) => {
-        
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
@@ -116,11 +115,14 @@ exports.level_update_get = (req, res, next) => {
 // POST Level Update
 exports.level_update_post = [
     
-    body('name').trim().isLength({ min: 1 }).escape().withMessage('Level name must not be empty.'),
-    body('total_days').trim().isLength({ min: 1 }).escape().withMessage('Total days must not be empty.'),
-    body('description').trim().isLength({ min: 1 }).escape().withMessage('description must not be empty.'),
+    body('name').trim().isLength({ min: 1 }).withMessage('Level name must not be empty.'),
+    body('total_days').trim().isLength({ min: 1 }).withMessage('Total days must not be empty.'),
+    body('description').trim().isLength({ min: 1 }).withMessage('description must not be empty.'),
 
     (req, res, next) => {
+        const utf8 = require('utf8');
+        console.log(utf8.decode(req.body.description))
+
 
         const errors = validationResult(req);
 

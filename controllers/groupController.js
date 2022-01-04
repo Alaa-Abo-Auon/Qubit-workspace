@@ -39,11 +39,11 @@ exports.group_create_get = (req, res, next) => {
 // POST Create New Group
 exports.group_create_post = [
 
-    body('name').trim().isLength({ min: 1 }).escape().withMessage('Group name is required.'),
-    body('level_start_date').trim().isLength({ min: 1 }).escape().withMessage('The level start date is required.'),
-    body('level_end_date').trim().isLength({ min: 1 }).escape().withMessage('The level end date is required.'),
-    body('level_choose').trim().isLength({ min: 1 }).escape().withMessage('Choose the level is required.'),
-    body('status').trim().isLength({ min: 1 }).escape().withMessage('Choose the status is required.'),
+    body('name').trim().isLength({ min: 1 }).withMessage('Group name is required.'),
+    body('level_start_date').trim().isLength({ min: 1 }).withMessage('The level start date is required.'),
+    body('level_end_date').trim().isLength({ min: 1 }).withMessage('The level end date is required.'),
+    body('level_choose').trim().isLength({ min: 1 }).withMessage('Choose the level is required.'),
+    body('status').trim().isLength({ min: 1 }).withMessage('Choose the status is required.'),
 
     (req, res, next) => {
 
@@ -212,11 +212,11 @@ exports.group_update_get = (req, res, next) => {
 // POST Group Update
 exports.group_update_post = [
 
-    body('name').trim().isLength({ min: 1 }).escape().withMessage('Group name is required.'),
-    body('level_start_date').optional({ checkFalsy: true }).trim().isLength({ min: 1 }).escape().withMessage('The level start date is required.'),
-    body('level_end_date').optional({ checkFalsy: true }).trim().isLength({ min: 1 }).escape().withMessage('The level end date is required.'),
-    body('level_choose').trim().isLength({ min: 1 }).escape().withMessage('The level is required.'),
-    body('status').trim().isLength({ min: 1 }).escape().withMessage('Choose the status is required.'),
+    body('name').trim().isLength({ min: 1 }).withMessage('Group name is required.'),
+    body('level_start_date').optional({ checkFalsy: true }).trim().isLength({ min: 1 }).withMessage('The level start date is required.'),
+    body('level_end_date').optional({ checkFalsy: true }).trim().isLength({ min: 1 }).withMessage('The level end date is required.'),
+    body('level_choose').trim().isLength({ min: 1 }).withMessage('The level is required.'),
+    body('status').trim().isLength({ min: 1 }).withMessage('Choose the status is required.'),
 
     (req, res, next) => {
 
@@ -355,6 +355,7 @@ exports.group_new_meeting_post = (req, res, next) => {
 
 /***************************************************************************************/
 
+<<<<<<< HEAD
 exports.calender_get = (req, res, next) => {
 
     async.parallel({
@@ -524,3 +525,10 @@ exports.calender_get = (req, res, next) => {
 }
 
 /***************************************************************************************/
+=======
+// calendar
+exports.calendar = (req, res, next) =>{
+
+
+}
+>>>>>>> main
