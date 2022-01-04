@@ -3,16 +3,18 @@
 </div>
 <hr>
 {{#if errors}}
-    <div class="mt-3 mb-3">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
         {{#each errors as |error|}}
-            <span class="text-danger">{{error.msg}}</span>
+            <span>{{error.msg}}</span>
             <br>
         {{/each}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 {{/if}}
 {{#if err}}
-    <div class="mt-3 mb-3">
-        <span class="text-danger">{{err}}</span>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span>{{err}}</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 {{/if}}
 <form method="POST" action="">
@@ -25,14 +27,14 @@
         <input id="phone_number" min="0" placeholder="Student phone number..."  type="number" name="phone_number" class="form-control" value={{student.phone_number}}>
     </div>
     <div class="mb-3">
-        <label class="form-label" for="enroll_date"><strong>Enroll date: <span class="text-danger">*</span></strong></label>
+        <label class="form-label" for="enroll_date"><strong>Enroll date: <span class="text-danger">*</span></strong><span class="text-secondary"> (Leave the field blank to not update)</span></label>
         <input id="enroll_date" min="2020-01-01" type="date" name="enroll_date" class="form-control" value={{student.enroll_date}}>
     </div>
     <div>
         {{#if levels}}
             <label class="form-label"><strong>Choose the level: <span class="text-danger">*</span></strong></label>
             <div class="mb-3">
-                <select class="form-select" name="level_choose">
+                <select id="level_choose" class="form-select" name="level_choose">
                     {{#each levels as |level|}}
                         <option value={{level._id}}>{{level.name}}</option>
                     {{/each}}
@@ -49,9 +51,10 @@
     </div>
     <div>
         {{#if groups}}
+            <div style="display: none;" id="type5">{{student.group}}</div>
             <label class="form-label"><strong>Choose the group: <span class="text-danger">*</span></strong></label>
             <div class="mb-3">
-                <select class="form-select" name="group_choose">
+                <select id="group_choose" class="form-select" name="group_choose">
                     {{#each groups as |group|}}
                         <option value={{group._id}}>{{group.name}}</option>
                     {{/each}}
@@ -65,6 +68,7 @@
         {{/if}}
     </div>
     <div class="mb-3">
+        <div style="display: none;" id="type6">{{student.status}}</div>
         <label class="form-label"><strong>Status: <span class="text-danger">*</span></strong></label>
         <select id="status" class="form-select" name="status">
             <option value="Active">Active</option>
@@ -74,6 +78,18 @@
             <option value="Warned">Warned</option>
         </select>
     </div>
+    <script>
+        window.onload = function(){
+            selecty = document.getElementById('type5').innerHTML
+            if(selecty){
+                document.getElementById('group_choose').value = selecty
+            }
+            selectz = document.getElementById('type6').innerHTML
+            if(selectz){
+                document.getElementById('status').value = selectz
+            }
+        }
+    </script>
     <div class="mt-3 mb-3">
         <button class="btn btn-primary" type="submit">Submit</button>
     </div>
