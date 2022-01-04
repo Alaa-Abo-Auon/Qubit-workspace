@@ -31,6 +31,7 @@ li{
   color: #fff;
   border-radius: 5px 5px 0 0;
   padding-left: 10px;
+  transition: 1s;
 }
 .box:hover{
   transition: 1s;
@@ -58,6 +59,8 @@ li{
 .free{
   color:rgb(0, 78, 0);
   background-color: rgb(143, 255, 143);
+  border-radius: 5px;
+  padding: 3px;
 }
 .not_free{
   color:rgb(103, 0, 0);
