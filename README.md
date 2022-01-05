@@ -3,7 +3,7 @@
 ## Introduction
 This project was created as a task to implement internal system managment for [**Qubit Coding Center**](http://qubitcodingcenter.ga/).
 \
-\
+
 ## Summary
 ### Levels
 Qubit WorkSpace provide the abilities to add, edit or delete level with description and many fields
@@ -18,7 +18,7 @@ Absent table provide a list with every student absent days that been registered 
 ### Calender
 Full week calender with every group meeting times
 \
-\
+
 ## Deployment
 ### Clone the project
 ```
@@ -29,7 +29,7 @@ git clone https://github.com/Alaa-Abo-Auon/Qubit-workspace.git
 npm start
 ```
 \
-\
+
 ## Rate limit
 | Title | Value |
 | :--- | :--- |
