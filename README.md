@@ -18,6 +18,8 @@ Absent table provide a list with every student absent days that been registered 
 Full week calender with every group meeting times
 
 ## Rate limit
+| Title | Value |
+| :--- | :--- |
 | Language used         | JavaScript
 | Framework             | NodeJS and ExpressJS
 | Database              | MongoDB
