@@ -1,7 +1,7 @@
 # Qubit-workspace
 
 ## Introduction
-This project was created as a task to implement internal system managment for **Qubit Coding Center**.
+This project was created as a task to implement internal system managment for [**Qubit Coding Center**](http://qubitcodingcenter.ga/).
 
 ## Summary
 ### Levels
