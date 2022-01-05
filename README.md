@@ -17,6 +17,16 @@ Absent table provide a list with every student absent days that been registered 
 ### Calender
 Full week calender with every group meeting times
 
+## Deployment
+### Clone the project
+```
+git clone https://github.com/Alaa-Abo-Auon/Qubit-workspace.git
+```
+### Run the project
+```
+npm start
+```
+
 ## Rate limit
 | Title | Value |
 | :--- | :--- |
