@@ -258,6 +258,12 @@ exports.student_update_post = [
                 group: req.body.group_choose,
                 status: req.body.status,
                 enroll_date: (req.body.enroll_date == '') ? Date.now : req.body.enroll_date,
+                level1: (req.body.level1 == '0') ? 0 : req.body.level1,
+                level2: (req.body.level2 == '0') ? 0 : req.body.level2,
+                level3: (req.body.level3 == '0') ? 0 : req.body.level3,
+                level4: (req.body.level4 == '0') ? 0 : req.body.level4,
+                level5: (req.body.level5 == '0') ? 0 : req.body.level5,
+                level6: (req.body.level6 == '0') ? 0 : req.body.level6,
                 _id: req.params.id,
             })
 
